@@ -41,6 +41,13 @@ Known limitations:
 docs/known-limitations.md
 ```
 
+Project tracking:
+
+```text
+CHANGELOG.md
+ROADMAP.md
+```
+
 ## Position
 
 AFLUZ develops ELUZA as an AI research project. This package is not ELUZA AI

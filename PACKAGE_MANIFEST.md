@@ -12,6 +12,7 @@ Status: public-safe GitHub/export candidate
 - offline browser demo
 - concept and access docs
 - evaluation protocol and known limitations docs
+- changelog, roadmap, and GitHub issue templates
 - evaluation-only license draft
 - generated batch report from the 30-case run
 - UX update: demo now has bilingual Thai/English `Easy Demo` scenario cards

@@ -1,0 +1,12 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Public demo / หน้าเดโมสาธารณะ
+    url: https://dench49.github.io/eluza-safe-ai-tool/
+    about: Try the public ELUZA Safe AI Tool demo before opening an issue.
+  - name: Public results / ผลทดสอบสาธารณะ
+    url: https://dench49.github.io/eluza-safe-ai-tool/results.html
+    about: View the public test-results page.
+  - name: Evaluation protocol / แนวทางทดสอบ
+    url: https://dench49.github.io/eluza-safe-ai-tool/docs/evaluation-protocol.html
+    about: Read how test cases should be collected and evaluated.
+
