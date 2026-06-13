@@ -4,10 +4,16 @@
 
 ## Goal
 
-ELUZA Safe AI Tool checks an AI draft answer before release.
+ELUZA Safe AI Tool checks an answer from another AI before release.
 
-เครื่องมือนี้ช่วยตรวจคำตอบร่างของ AI ก่อนปล่อยออก ว่าคำตอบนั้นควรถูกปล่อย
+เครื่องมือนี้ช่วยตรวจคำตอบจาก AI ตัวอื่นก่อนปล่อยออก ว่าคำตอบนั้นควรถูกปล่อย
 ปฏิเสธ เก็บเป็นสมมติฐาน ส่งไปวิจัยต่อ หรือเก็บเป็นประสบการณ์ที่ใช้ซ้ำได้แบบมีขอบเขต
+
+It is not a chatbot and not a calculator. Ask another AI first, then paste the
+question, the AI answer, and a rule/evidence/reference into this tool.
+
+มันไม่ใช่แชทบอทและไม่ใช่เครื่องคิดเลข ให้ถาม AI ตัวอื่นก่อน แล้วเอาคำถาม
+คำตอบของ AI และกฎ/หลักฐาน/อ้างอิง มาใส่เครื่องมือนี้เพื่อตรวจ
 
 This public demo is not ELUZA AI itself. It does not include private ELUZA core
 source, private memory, raw data, private architecture, or internal logic.
@@ -17,6 +23,27 @@ private architecture หรือ internal logic
 
 ## Quick Test
 
+Use this flow:
+
+ใช้ตามขั้นนี้:
+
+```text
+1. Open any AI and ask a real question.
+   เปิด AI ตัวไหนก็ได้ แล้วถามคำถามจริง
+
+2. Copy the original question into field 1.
+   คัดลอกคำถามเดิมใส่ช่องที่ 1
+
+3. Copy the AI answer into field 2.
+   คัดลอกคำตอบของ AI ใส่ช่องที่ 2
+
+4. Add rules, policy, evidence, references, or context into field 3.
+   ใส่กฎ ข้อบังคับ หลักฐาน อ้างอิง หรือบริบทในช่องที่ 3
+
+5. Click Evaluate.
+   กดตรวจ
+```
+
 Open the public demo:
 
 เปิดเดโม:
@@ -25,17 +52,9 @@ Open the public demo:
 https://dench49.github.io/eluza-safe-ai-tool/
 ```
 
-Click:
+If you are a general tester, start with:
 
-กด:
-
-```text
-Open Demo / เปิดเดโม
-```
-
-Then use:
-
-จากนั้นใช้:
+ถ้าเป็นคนทั่วไป ให้เริ่มจาก:
 
 ```text
 ทดลองง่าย / Easy Demo
@@ -44,6 +63,52 @@ Then use:
 Choose one scenario card and read the result panel.
 
 เลือกการ์ดตัวอย่างหนึ่งอัน แล้วดูผลลัพธ์ด้านขวา
+
+General testers should start with scenario cards, not `Advanced Test`.
+
+คนทั่วไปควรเริ่มจากการ์ดตัวอย่าง ไม่ควรเริ่มจาก `Advanced Test`
+
+## General Tester Script
+
+บททดสอบสำหรับคนทั่วไป
+
+```text
+1. Open the demo.
+   เปิดเดโม
+
+2. Click one scenario card, such as Tree overclaim or Source code request.
+   กดการ์ดตัวอย่างหนึ่งอัน เช่น ต้นไม้/น้ำบาดาล หรือ ขอ source code
+
+3. Read "Before: AI draft".
+   อ่านช่อง "ก่อนตรวจ" ว่า AI ร่างคำตอบไว้อย่างไร
+
+4. Read "After: safer output".
+   อ่านช่อง "หลังตรวจ" ว่าเครื่องมือเปลี่ยนหรือหยุดคำตอบอย่างไร
+
+5. Read "Plain meaning".
+   อ่านช่อง "ความหมายแบบคนทั่วไป" ว่าเข้าใจเหตุผลไหม
+
+6. Answer the feedback form.
+   ตอบแบบประเมินท้ายบททดสอบ
+```
+
+## Feedback Form
+
+แบบประเมินหลังทดสอบ
+
+```text
+1. เข้าใจไหมว่าเครื่องมือนี้ทำอะไร?
+ตอบ:
+
+2. ตอนกดตัวอย่าง จุดไหนงงที่สุด?
+ตอบ:
+
+3. ผลลัพธ์ช่วยให้คำตอบ AI น่าเชื่อถือหรือปลอดภัยขึ้นไหม?
+ตอบ:
+
+4. อยากให้เพิ่มหรือแก้อะไร?
+ตอบ:
+```
 
 ## What to Look For
 
@@ -93,8 +158,14 @@ Use `Advanced Test` to enter:
 - คำถามของผู้ใช้
 - AI candidate answer
 - คำตอบร่างของ AI
-- evidence, permission, source notes, or context
-- หลักฐาน สิทธิ์ แหล่งอ้างอิง หรือบริบท
+- rule, policy, evidence, reference, permission, source notes, or context
+- กฎ ข้อบังคับ หลักฐาน อ้างอิง สิทธิ์ แหล่งอ้างอิง หรือบริบท
+
+Do not use `Advanced Test` as a normal question box. It checks an answer from
+another AI and routes it; it does not generate the answer.
+
+อย่าใช้ `Advanced Test` เป็นช่องถามคำถามทั่วไป ช่องนี้ตรวจคำตอบจาก AI ตัวอื่นและ
+route คำตอบ ไม่ได้สร้างคำตอบแทน AI
 
 Then check:
 

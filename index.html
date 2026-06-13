@@ -85,6 +85,55 @@
       padding-top: 18px;
       font-size: 14px;
     }
+
+    .plain-box {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcff;
+    }
+
+    .plain-box strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .plain-box p {
+      margin: 0;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .step b {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .step span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.4;
+      font-size: 14px;
+    }
+
+    @media (max-width: 820px) {
+      .steps { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -100,13 +149,47 @@
         core source, memory, raw data, private architecture, or internal logic.
       </p>
 
+      <div class="plain-box">
+        <strong>สรุปง่าย ๆ / Plain explanation</strong>
+        <p>
+          นี่คือเครื่องมือตรวจคำตอบจาก AI ตัวอื่น: ถาม AI ก่อน แล้วเอาคำถาม
+          คำตอบ และกฎ/หลักฐาน/อ้างอิง มาใส่ในเดโม เพื่อดูว่าคำตอบนั้นควรเชื่อถือ
+          ปล่อย หยุด หรือส่งไปตรวจเพิ่ม
+        </p>
+        <p>
+          This tool checks an answer from another AI. Ask an AI first, then paste
+          the question, the AI answer, and your rule/evidence/reference into the
+          demo to see whether the answer should be trusted, released, stopped, or
+          reviewed further.
+        </p>
+      </div>
+
+      <div class="steps" aria-label="How to use">
+        <div class="step">
+          <b>1. เปิด AI ตัวหนึ่ง</b>
+          <span>ถาม ChatGPT, Gemini, Claude หรือ AI อื่น / Ask any AI.</span>
+        </div>
+        <div class="step">
+          <b>2. คัดลอกคำถาม</b>
+          <span>เอาคำถามเดิมใส่ช่องที่ 1 / Paste the original question.</span>
+        </div>
+        <div class="step">
+          <b>3. คัดลอกคำตอบ AI</b>
+          <span>เอาคำตอบของ AI ใส่ช่องที่ 2 / Paste the AI draft answer.</span>
+        </div>
+        <div class="step">
+          <b>4. ใส่กฎหรือหลักฐาน</b>
+          <span>ใส่กฎ ข้อบังคับ อ้างอิง หรือสิ่งที่อยากให้ตรวจ / Add rule, policy, evidence, or reference.</span>
+        </div>
+      </div>
+
       <div class="actions">
         <a class="button" href="./demo/offline_demo.html">Open Demo / เปิดเดโม</a>
         <a class="button secondary" href="https://github.com/DENCH49/eluza-safe-ai-tool">View GitHub Repository</a>
       </div>
 
       <p class="note">
-        สำหรับคนทั่วไป: กด Open Demo แล้วเลือกการ์ดตัวอย่างได้เลย<br>
+        สำหรับคนทั่วไป: กด Open Demo แล้วลองตามขั้น 1-2-3-4 ด้านบน หรือเลือกการ์ดตัวอย่างก่อน<br>
         For developers: use the demo first, then inspect the README, CLI, Python
         API, examples, and redacted JSON trace.
       </p>

@@ -110,6 +110,106 @@
       line-height: 1.5;
     }
 
+    .plain-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .intro-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .intro-card b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+
+    .intro-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .intro-card.warning {
+      border-color: #e4c16f;
+      background: #fff9e9;
+    }
+
+    .use-steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0 0 14px;
+    }
+
+    .use-step {
+      min-height: 102px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .use-step b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .use-step span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .test-plan {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .test-plan h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .test-plan ol {
+      margin: 0;
+      padding-left: 22px;
+      line-height: 1.55;
+    }
+
+    .test-plan li {
+      margin-bottom: 7px;
+    }
+
+    .copy-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfcff;
+    }
+
+    .copy-box b {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .copy-box pre {
+      min-height: auto;
+      margin: 0;
+      background: #f3f6fb;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
     .tool-flow {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -466,6 +566,9 @@
       .mode-tabs { display: grid; width: 100%; }
       .mode-tabs button { min-width: 0; }
       .scenario-grid,
+      .plain-intro,
+      .use-steps,
+      .test-plan,
       .explain-strip,
       .tool-flow,
       .developer-strip,
@@ -484,6 +587,47 @@
   </header>
 
   <main class="shell">
+    <div class="plain-intro">
+      <div class="intro-card">
+        <b>มันทำอะไร / What this tool does</b>
+        <p>
+          เอาคำตอบจาก AI ตัวอื่นมาตรวจ ว่าควรเชื่อถือ ปล่อย หยุด ปฏิเสธ
+          หรือหาหลักฐานเพิ่ม / Check an answer from another AI and decide whether
+          it should be trusted, released, stopped, refused, or reviewed further.
+        </p>
+      </div>
+      <div class="intro-card warning">
+        <b>ไม่ใช่อะไร / What it is not</b>
+        <p>
+          ไม่ใช่ช่องถาม AI ใหม่ ไม่ใช่เครื่องคิดเลข และไม่ใช่ ELUZA AI ตัวเต็ม
+          / It is not a new chatbot, not a calculator, and not full ELUZA AI.
+        </p>
+      </div>
+    </div>
+
+    <div class="use-steps" aria-label="How to use this demo">
+      <div class="use-step">
+        <b>1. เปิด AI แล้วถาม</b>
+        <span>ใช้ ChatGPT, Gemini, Claude หรือ AI อื่นถามคำถามจริงก่อน / Ask a real question in any AI.</span>
+      </div>
+      <div class="use-step">
+        <b>2. ใส่คำถามช่อง 1</b>
+        <span>คัดลอกคำถามเดิมมาใส่ / Paste the original user question.</span>
+      </div>
+      <div class="use-step">
+        <b>3. ใส่คำตอบช่อง 2</b>
+        <span>คัดลอกคำตอบร่างของ AI มาใส่ / Paste the AI draft answer.</span>
+      </div>
+      <div class="use-step">
+        <b>4. ใส่กฎ/อ้างอิงช่อง 3</b>
+        <span>ใส่กฎ ข้อบังคับ หลักฐาน หรือแหล่งอ้างอิง แล้วกดตรวจ / Add rules, evidence, or references, then evaluate.</span>
+      </div>
+      <div class="use-step">
+        <b>5. ดูผลและประเมิน</b>
+        <span>ดูว่าคำตอบควรปล่อย หยุด หรือหาหลักฐานเพิ่ม แล้วตอบแบบประเมิน / Read the result and send feedback.</span>
+      </div>
+    </div>
+
     <nav class="mode-tabs" aria-label="Demo mode">
       <button id="easyMode" class="active" type="button">ทดลองง่าย / Easy Demo</button>
       <button id="advancedMode" type="button">ทดสอบขั้นสูง / Advanced Test</button>
@@ -512,9 +656,20 @@
       <section id="easyPanel">
         <h2>เลือกสถานการณ์ทดสอบ / Choose a test case</h2>
         <p class="simple-note">
-          สำหรับคนทั่วไป: กดตัวอย่างหนึ่งอัน แล้วดูว่าระบบควรปล่อยคำตอบ AI หรือควรหยุดก่อน
-          / For general testers: choose a case and see whether the AI answer should be released or stopped.
+          สำหรับคนทั่วไป: เริ่มตรงนี้ก่อน กดตัวอย่างหนึ่งอัน แล้วดูว่าระบบควรปล่อยคำตอบ AI หรือควรหยุดก่อน
+          / For general testers: start here, choose a case, and see whether the AI answer should be released or stopped.
         </p>
+
+        <div class="test-plan">
+          <h2>บททดสอบสำหรับคนทั่วไป / General Test Script</h2>
+          <ol>
+            <li>กดการ์ดตัวอย่างหนึ่งอัน เช่น `ต้นไม้ / น้ำบาดาล` หรือ `ขอ source code`</li>
+            <li>ดูช่อง `ก่อนตรวจ` ว่า AI ร่างคำตอบไว้แบบไหน</li>
+            <li>ดูช่อง `หลังตรวจ` ว่าเครื่องมือแก้ให้ปลอดภัยขึ้นหรือหยุดคำตอบหรือไม่</li>
+            <li>อ่าน `ความหมายแบบคนทั่วไป` ว่าเหตุผลเข้าใจง่ายหรือไม่</li>
+            <li>ตอบแบบประเมินท้ายหน้า: เข้าใจไหม, งงตรงไหน, มีประโยชน์ไหม</li>
+          </ol>
+        </div>
 
         <div class="scenario-grid" id="scenarioGrid"></div>
 
@@ -547,18 +702,39 @@
             <span>ได้ JSON trace สำหรับ debug และ review / Get JSON trace for debugging and review</span>
           </div>
         </div>
+
+        <div class="copy-box">
+          <b>แบบประเมินหลังทดสอบ / Feedback form</b>
+          <pre>1. เข้าใจไหมว่าเครื่องมือนี้ทำอะไร?
+ตอบ:
+
+2. ตอนกดตัวอย่าง จุดไหนงงที่สุด?
+ตอบ:
+
+3. ผลลัพธ์ช่วยให้คำตอบ AI น่าเชื่อถือหรือปลอดภัยขึ้นไหม?
+ตอบ:
+
+4. อยากให้เพิ่มหรือแก้อะไร?
+ตอบ:</pre>
+        </div>
       </section>
 
       <section id="advancedPanel" class="hidden">
-        <h2>ทดสอบขั้นสูง / Advanced Test</h2>
+        <h2>ทดสอบขั้นสูงสำหรับผู้พัฒนา / Advanced Test for Developers</h2>
         <p class="simple-note">
-          สำหรับผู้พัฒนา AI: ใส่ prompt, candidate answer และ evidence เองเพื่อตรวจ route
-          / For AI developers: enter a prompt, candidate answer, and evidence to inspect the route.
+          ใช้ช่องนี้หลังจากคุณถาม AI ตัวอื่นแล้ว ให้เอาคำถามเดิม คำตอบของ AI และกฎ/หลักฐาน/อ้างอิง
+          มาใส่ เพื่อตรวจว่าคำตอบนั้นน่าเชื่อถือพอไหม / Use this after asking another AI.
+          Paste the original prompt, the AI answer, and rule/evidence/reference to inspect whether the answer is reliable enough.
         </p>
+        <div class="notice">
+          ตัวอย่างที่ถูกต้อง: ช่อง 1 ใส่คำถามที่ถาม AI, ช่อง 2 ใส่คำตอบที่ AI ตอบ,
+          ช่อง 3 ใส่กฎ ข้อบังคับ หลักฐาน หรือแหล่งอ้างอิงที่อยากใช้ตรวจ / Correct use:
+          field 1 = question, field 2 = AI answer, field 3 = rule, policy, evidence, or reference.
+        </div>
 
         <label for="prompt">
-          1. คำถามของผู้ใช้
-          <span>User input / prompt</span>
+          1. คำถามเดิมของผู้ใช้
+          <span>Original user input / prompt</span>
         </label>
         <textarea id="prompt"></textarea>
 
@@ -569,8 +745,8 @@
         <textarea id="candidate"></textarea>
 
         <label for="evidence">
-          3. หลักฐาน / สิทธิ์ / บริบท
-          <span>Evidence, permission, source notes, or context</span>
+          3. กฎ / ข้อบังคับ / หลักฐาน / อ้างอิง / บริบท
+          <span>Rule, policy, evidence, reference, permission, or context</span>
         </label>
         <textarea id="evidence"></textarea>
 
