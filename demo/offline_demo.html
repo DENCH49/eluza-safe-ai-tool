@@ -835,12 +835,20 @@
           </details>
         </div>
         <div class="feedback-form">
-          <h3>ส่ง feedback / Send feedback</h3>
+          <h3>ส่งผลทดสอบเข้า Google Form / Send test result</h3>
+          <p class="simple-note">
+            กดปุ่มหลักเพื่อเปิด Google Form ที่กรอกคำถาม คำตอบ หลักเกณฑ์ และผลตรวจให้แล้ว จากนั้นเติมความเห็นแล้วกดส่ง
+            / Open a pre-filled Google Form, add your feedback, then submit it.
+          </p>
+          <p class="simple-note">
+            ทดสอบได้หลายรอบ ไม่ต้องมี GitHub และไม่จำเป็นต้องส่งแค่ครั้งเดียว ถ้าเจอคำถามใหม่หรือผลแปลก ให้ส่งเป็นอีกเคสได้เลย
+            / You can test repeatedly without GitHub. Submit a new case whenever you find a new or strange result.
+          </p>
           <label for="feedbackUnderstand">
-            เข้าใจไหมว่าเครื่องมือนี้ทำอะไร?
-            <span>Did you understand what this tool does?</span>
+            คุณคิดว่าผลลัพธ์ถูกต้องไหม เพราะอะไร
+            <span>Do you think the result is correct? Why?</span>
           </label>
-          <textarea id="feedbackUnderstand" placeholder="ตอบสั้น ๆ ได้เลย"></textarea>
+          <textarea id="feedbackUnderstand" placeholder="เช่น ถูก เพราะ... / ยังไม่ถูก เพราะ..."></textarea>
 
           <label for="feedbackConfusing">
             จุดไหนงงที่สุด?
@@ -855,8 +863,8 @@
           <textarea id="feedbackSuggestion" placeholder="ข้อเสนอแนะ"></textarea>
 
           <div class="controls">
-            <button id="sendFeedback" class="primary" type="button">คัดลอก feedback</button>
-            <button id="openIssue" class="secondary" type="button">ส่งผ่าน GitHub</button>
+            <button id="openGoogleForm" class="primary" type="button">ส่งผลทดสอบเข้า Google Form</button>
+            <button id="sendFeedback" class="secondary" type="button">คัดลอก feedback สำรอง</button>
           </div>
           <span id="feedbackStatus" class="simple-note"></span>
         </div>
@@ -873,6 +881,17 @@
       "ซอร์สโค้ด", "โค้ดทั้งหมด", "ข้อมูลดิบ", "ความจำส่วนตัว", "กฎภายใน",
       "ขอ source", "ขอซอร์ส", "ขอโค้ด"
     ];
+
+    const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdsvwZmvNZ5MkaUlDVsUGMIUmaZN8IiRfT2RYYtGJJbFYeXJw/viewform";
+    const googleFormEntries = {
+      question: "entry.1115899116",
+      aiAnswer: "entry.1385091943",
+      rule: "entry.270126475",
+      result: "entry.949389927",
+      correctness: "entry.962040400",
+      confusing: "entry.1406349921",
+      suggestion: "entry.199949405"
+    };
 
     const samples = [
       {
@@ -1233,44 +1252,71 @@
       document.querySelectorAll(".scenario").forEach((button) => button.classList.remove("active"));
     }
 
-    function feedbackBody() {
-      const payload = {
+    function feedbackPayload() {
+      return {
         question: $("prompt").value,
         ai_answer: $("candidate").value,
         rule_or_reference: $("evidence").value,
         result: $("pill").textContent,
         safer_output: $("afterText").textContent,
-        understood: $("feedbackUnderstand").value,
+        risk: $("risk").textContent,
+        next_route: $("route").textContent,
+        correctness: $("feedbackUnderstand").value,
         confusing: $("feedbackConfusing").value,
         suggestion: $("feedbackSuggestion").value
       };
+    }
+
+    function feedbackBody() {
+      const payload = feedbackPayload();
       return `## Demo feedback\n\n` +
+        `### Test type\nRepeated public demo test case\n\n` +
         `### Question asked to AI\n${payload.question || "-"}\n\n` +
         `### AI answer\n${payload.ai_answer || "-"}\n\n` +
         `### Rule / reference\n${payload.rule_or_reference || "-"}\n\n` +
         `### Tool result\n${payload.result || "-"}\n\n` +
         `### Safer output\n${payload.safer_output || "-"}\n\n` +
-        `### เข้าใจไหมว่าเครื่องมือนี้ทำอะไร?\n${payload.understood || "-"}\n\n` +
+        `### Risk\n${payload.risk || "-"}\n\n` +
+        `### Next route\n${payload.next_route || "-"}\n\n` +
+        `### คุณคิดว่าผลลัพธ์ถูกต้องไหม เพราะอะไร\n${payload.correctness || "-"}\n\n` +
         `### จุดไหนงงที่สุด?\n${payload.confusing || "-"}\n\n` +
         `### อยากให้เพิ่มหรือแก้อะไร?\n${payload.suggestion || "-"}\n`;
+    }
+
+    function buildGoogleFormLink() {
+      const payload = feedbackPayload();
+      const url = new URL(googleFormUrl);
+      const resultText = [
+        payload.result || "-",
+        `Safe response: ${payload.safer_output || "-"}`,
+        `Risk: ${payload.risk || "-"}`,
+        `Next route: ${payload.next_route || "-"}`
+      ].join("\n");
+
+      url.searchParams.set(googleFormEntries.question, payload.question || "");
+      url.searchParams.set(googleFormEntries.aiAnswer, payload.ai_answer || "");
+      url.searchParams.set(googleFormEntries.rule, payload.rule_or_reference || "");
+      url.searchParams.set(googleFormEntries.result, resultText);
+      if (payload.correctness) url.searchParams.set(googleFormEntries.correctness, payload.correctness);
+      if (payload.confusing) url.searchParams.set(googleFormEntries.confusing, payload.confusing);
+      if (payload.suggestion) url.searchParams.set(googleFormEntries.suggestion, payload.suggestion);
+      return url.toString();
     }
 
     async function sendFeedback() {
       const body = feedbackBody();
       try {
         await navigator.clipboard.writeText(body);
-        $("feedbackStatus").textContent = "คัดลอกแล้ว ส่งข้อความนี้ให้ผู้พัฒนาได้เลย / Copied.";
+        $("feedbackStatus").textContent = "คัดลอกแล้ว ถ้าเปิด Google Form ไม่ได้ ให้ส่งข้อความนี้ให้ผู้พัฒนา / Copied as fallback.";
       } catch (error) {
         $("feedbackStatus").textContent = "คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความ feedback แล้วคัดลอกเอง / Copy failed.";
       }
     }
 
-    function openIssue() {
-      const body = feedbackBody();
-      const url = new URL("https://github.com/DENCH49/eluza-safe-ai-tool/issues/new");
-      url.searchParams.set("title", "Demo feedback");
-      url.searchParams.set("body", body);
-      window.open(url.toString(), "_blank", "noopener,noreferrer");
+    function openGoogleForm() {
+      const target = buildGoogleFormLink();
+      $("feedbackStatus").textContent = "เปิด Google Form แล้ว ตรวจข้อมูล เติมความเห็น แล้วกดส่ง / Google Form opened.";
+      window.open(target, "_blank", "noopener,noreferrer");
     }
 
     function renderScenarios() {
@@ -1310,7 +1356,7 @@
     $("loadOverclaim").addEventListener("click", () => loadSample("tree"));
     $("clearForm").addEventListener("click", clearForm);
     $("sendFeedback").addEventListener("click", sendFeedback);
-    $("openIssue").addEventListener("click", openIssue);
+    $("openGoogleForm").addEventListener("click", openGoogleForm);
 
     renderScenarios();
     loadSample("math");
