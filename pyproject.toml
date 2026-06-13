@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eluza-safe-ai-tool"
+version = "0.1.0"
+description = "Public-safe AI answer evaluation tool derived from ELUZA safety research."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Evaluation-only. See LICENSE_EVALUATION.txt." }
+authors = [
+  { name = "AFLUZ / ELUZA project owner" }
+]
+keywords = [
+  "ai-safety",
+  "answer-evaluation",
+  "hallucination",
+  "access-boundary",
+  "traceable-ai"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: Other/Proprietary License",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+
+[project.scripts]
+eluza-safe-ai = "eluza_safe_ai.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

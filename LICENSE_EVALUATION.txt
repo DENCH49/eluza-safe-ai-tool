@@ -1,0 +1,34 @@
+ELUZA Safe AI Tool - Evaluation License Draft
+
+Copyright (c) AFLUZ / ELUZA project owner.
+
+This package is provided for evaluation only.
+
+Allowed:
+- Run the tool locally.
+- Evaluate sample prompts and AI candidate answers.
+- Share high-level feedback with the owner.
+- Use generated reports for internal evaluation discussion.
+- Reference the public concept with attribution.
+
+Not allowed without a separate written agreement:
+- Commercial deployment.
+- Resale, sublicensing, or paid repackaging.
+- Removing owner attribution.
+- Reverse engineering or reconstructing private ELUZA core logic.
+- Claiming this package is ELUZA AI itself.
+- Claiming this package includes full EluzaCore, private memory, raw data, or
+  internal decision logic.
+- Training, fine-tuning, distilling, or cloning another product from this
+  package.
+- Publishing this package as your own SDK, guardrail, benchmark, or framework.
+
+No warranty:
+This is an early public-safe evaluation tool. It is not a legal, medical,
+financial, religious, or safety-critical decision system. Outputs are evaluation
+signals only.
+
+Commercial use:
+Contact the owner for a commercial evaluation license, scoped pilot, SDK/tool
+license, collaborative research protocol, or custom integration agreement.
+
