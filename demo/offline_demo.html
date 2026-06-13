@@ -1070,6 +1070,77 @@
       return score;
     }
 
+    function brainLanguageFrame(prompt, candidate, evidence) {
+      const combined = `${prompt}\n${candidate}\n${evidence}`.toLowerCase();
+      const rule = evidence.toLowerCase();
+      const meanings = [];
+      const domains = [];
+
+      const liveSourceNeeded = has(combined, [
+        "weather", "forecast", "today", "tomorrow", "latest", "news", "price",
+        "พยากรณ์อากาศ", "พยากรณ์", "พรุ่งนี้", "วันนี้", "ข่าว", "ราคา"
+      ]);
+      if (liveSourceNeeded) {
+        meanings.push("LIVE_SOURCE_NEEDED");
+        domains.push("live_or_weather");
+      }
+
+      const sourceReference = has(rule, [
+        "source", "reference", "official", "paper", "document",
+        "อ้างอิง", "แหล่งข้อมูล", "แหล่งอ้างอิง", "เอกสาร", "พยากรณ์อากาศ", "กรมอุตุ"
+      ]);
+      if (sourceReference) meanings.push("SOURCE_REFERENCE");
+
+      const evidenceRequired = has(rule, [
+        "evidence before", "verify before", "before claiming", "requires evidence",
+        "ต้องมีหลักฐาน", "หลักฐานก่อน", "ก่อนสรุป", "ตรวจสอบก่อน", "ยืนยันก่อน"
+      ]);
+      if (evidenceRequired) meanings.push("REQUIRE_EVIDENCE");
+
+      const medical = has(combined, [
+        "medicine", "medical", "supplement", "cure", "doctor", "disease",
+        "กินยา", "ยาแก้", "ยารักษา", "รักษา", "โรค", "แพทย์", "อาหารเสริม"
+      ]);
+      if (medical) domains.push("medical");
+
+      const religious = has(combined, ["quran", "religion", "อัลกุรอาน", "ศาสนา"]);
+      if (religious) domains.push("religious");
+
+      const legal = has(combined, ["legal", "law", "contract", "กฎหมาย", "สัญญา"]);
+      if (legal) domains.push("legal");
+
+      const financial = has(combined, ["financial", "finance", "investment", "stock", "การเงิน", "ลงทุน", "หุ้น"]);
+      if (financial) domains.push("financial");
+
+      const highRisk = medical || religious || legal || financial;
+      if (highRisk) meanings.push("HIGH_RISK_DOMAIN");
+
+      const weakEvidence = has(combined, [
+        "one observation", "single", "once", "no evidence", "without evidence",
+        "ครั้งเดียว", "เดี่ยว", "ไม่มีหลักฐาน", "ยังไม่มี"
+      ]);
+      if (weakEvidence) meanings.push("WEAK_EVIDENCE");
+
+      const approvedSeed = has(combined, ["validated experience", "approved experience", "seed return"]);
+      if (approvedSeed) meanings.push("APPROVED_EXPERIENCE");
+
+      let strength = evidenceStrength(evidence);
+      if (sourceReference) strength += 1;
+      if (evidenceRequired) strength += 1;
+
+      return {
+        meanings: [...new Set(meanings)],
+        domains: [...new Set(domains)],
+        evidence_strength: strength,
+        high_risk: highRisk,
+        live_source_needed: liveSourceNeeded,
+        source_reference: sourceReference,
+        evidence_required: evidenceRequired,
+        weak_evidence: weakEvidence,
+        approved_seed: approvedSeed
+      };
+    }
+
     function evaluate(prompt, candidate, evidence) {
       const combined = `${prompt}\n${candidate}\n${evidence}`.toLowerCase();
       if (has(combined, protectedPatterns)) {
@@ -1095,41 +1166,45 @@
       const basicFact = basicFactResult(prompt, candidate);
       if (basicFact) return basicFact;
 
-      const strength = evidenceStrength(evidence);
+      const brainFrame = brainLanguageFrame(prompt, candidate, evidence);
+      const strength = brainFrame.evidence_strength;
       const answer = candidate.toLowerCase();
       const absolutist = has(answer, ["definitely", "clearly", "proves", "proven", "always", "everyone should", "แน่นอน", "พิสูจน์", "ชัดเจน"]);
       const careful = has(answer, ["may", "might", "likely", "hypothesis", "needs testing", "before claiming", "อาจ", "น่าจะ", "ควรทดสอบ", "ก่อนสรุป"]);
-      const highRisk = has(combined, ["medicine", "medical", "supplement", "cure", "quran", "religion", "legal", "financial", "ยา", "รักษา", "อัลกุรอาน", "ศาสนา"]);
+      const highRisk = brainFrame.high_risk;
       const sideIdea = has(answer, ["side idea", "future", "not the current answer", "not answer this question directly", "ต่อยอด", "ภายหลัง"]);
       const weakOnly = has(combined, ["random idea", "coincidence", "color coincidence", "ไม่มีหลักฐาน"]);
       const asksNext = has(prompt, ["what should", "next", "ทำอะไรต่อ", "ควรทำ"]);
-      const seedReady = has(combined, ["validated experience", "seed return"]);
+      const seedReady = brainFrame.approved_seed;
 
       if (seedReady && strength >= 4) {
-        return result(true, "SEED_FRUIT", "SEED_RETURN_READY", "approved_experience_reuse", "TAJRIBAH_STORE", "ใช้เป็นประสบการณ์ซ้ำได้เฉพาะ scope เดิม ไม่ใช่ความจริงสากล / Reuse as scoped experience only, not universal truth.");
+        return result(true, "SEED_FRUIT", "SEED_RETURN_READY", "approved_experience_reuse", "TAJRIBAH_STORE", "ใช้เป็นประสบการณ์ซ้ำได้เฉพาะ scope เดิม ไม่ใช่ความจริงสากล / Reuse as scoped experience only, not universal truth.", brainFrame);
+      }
+      if (brainFrame.live_source_needed) {
+        return result(false, "HYPOTHESIS_FRUIT", "RESEARCH_MORE", "live_source_needed", "RESEARCH_QUEUE", "ต้องตรวจแหล่งข้อมูลปัจจุบันก่อนใช้เป็นความจริง / Check the current source before treating this as true.", brainFrame);
       }
       if (highRisk && (absolutist || (strength < 1 && !careful))) {
-        return result(false, "REJECTED_FRUIT", "REJECTED", "high_risk_truth_overclaim", "REJECTED_WITH_REASON", "คำตอบนี้ฟันธงในเรื่องเสี่ยงโดยไม่มีหลักฐานพอ ควรปฏิเสธหรือส่งให้ผู้เชี่ยวชาญตรวจ / This high-risk claim overstates evidence and needs rejection or expert review.");
+        return result(false, "REJECTED_FRUIT", "REJECTED", "high_risk_truth_overclaim", "REJECTED_WITH_REASON", "คำตอบนี้ฟันธงในเรื่องเสี่ยงโดยไม่มีหลักฐานพอ ควรปฏิเสธหรือส่งให้ผู้เชี่ยวชาญตรวจ / This high-risk claim overstates evidence and needs rejection or expert review.", brainFrame);
       }
       if (highRisk && strength < 1) {
-        return result(false, "HYPOTHESIS_FRUIT", "RESEARCH_MORE", "high_risk_needs_review", "RESEARCH_QUEUE", "คำตอบนี้ยังเป็นเรื่องต้องวิจัย/ตรวจต่อ ไม่ควรพูดเป็นความจริงสาธารณะ / This needs more research or qualified review before public truth.");
+        return result(false, "HYPOTHESIS_FRUIT", "RESEARCH_MORE", "high_risk_needs_review", "RESEARCH_QUEUE", "คำตอบนี้ยังเป็นเรื่องต้องวิจัย/ตรวจต่อ ไม่ควรพูดเป็นความจริงสาธารณะ / This needs more research or qualified review before public truth.", brainFrame);
       }
       if (sideIdea) {
-        return result(false, "SIDE_FRUIT", "RESEARCH_MORE", "not_current_answer_but_useful", "IDEA_BANK", "เป็นไอเดียข้างทางที่มีประโยชน์ แต่ยังไม่ใช่คำตอบของโจทย์นี้ / Useful side idea, not the direct answer.");
+        return result(false, "SIDE_FRUIT", "RESEARCH_MORE", "not_current_answer_but_useful", "IDEA_BANK", "เป็นไอเดียข้างทางที่มีประโยชน์ แต่ยังไม่ใช่คำตอบของโจทย์นี้ / Useful side idea, not the direct answer.", brainFrame);
       }
       if (weakOnly && strength < 1) {
-        return result(false, "WEAK_FRUIT", "UNPROVEN", "weak_link", "DORMANT_ARCHIVE", "ข้อมูลอ่อนเกินไป เก็บไว้ก่อนได้แต่ไม่ควรใช้ตอบตอนนี้ / Too weak for current output; archive only.");
+        return result(false, "WEAK_FRUIT", "UNPROVEN", "weak_link", "DORMANT_ARCHIVE", "ข้อมูลอ่อนเกินไป เก็บไว้ก่อนได้แต่ไม่ควรใช้ตอบตอนนี้ / Too weak for current output; archive only.", brainFrame);
       }
       if ((asksNext && careful) || (strength >= 4 && !absolutist)) {
-        return result(true, "USABLE_FRUIT", "USABLE", "bounded_output", "OUTPUT_ACTION", candidate);
+        return result(true, "USABLE_FRUIT", "USABLE", "bounded_output", "OUTPUT_ACTION", candidate, brainFrame);
       }
       if (absolutist && strength < 2) {
-        return result(false, "HYPOTHESIS_FRUIT", "NEEDS_TEST", "observation_to_truth_jump", "RESEARCH_QUEUE", "คำตอบนี้สรุปเร็วเกินไป ควรพูดเป็นสมมติฐานและทดสอบต่อ / This jumps to truth too early; keep it as a hypothesis and test.");
+        return result(false, "HYPOTHESIS_FRUIT", "NEEDS_TEST", "observation_to_truth_jump", "RESEARCH_QUEUE", "คำตอบนี้สรุปเร็วเกินไป ควรพูดเป็นสมมติฐานและทดสอบต่อ / This jumps to truth too early; keep it as a hypothesis and test.", brainFrame);
       }
-      return result(false, "HYPOTHESIS_FRUIT", "NEEDS_TEST", "needs_more_evidence", "RESEARCH_QUEUE", "ยังต้องมีหลักฐานเพิ่มก่อนใช้เป็นความจริง / More evidence is needed before treating this as truth.");
+      return result(false, "HYPOTHESIS_FRUIT", "NEEDS_TEST", "needs_more_evidence", "RESEARCH_QUEUE", "ยังต้องมีหลักฐานเพิ่มก่อนใช้เป็นความจริง / More evidence is needed before treating this as truth.", brainFrame);
     }
 
-    function result(allowed, fruit, status, risk, route, safeResponse) {
+    function result(allowed, fruit, status, risk, route, safeResponse, brainFrame = null) {
       return {
         allowed,
         safe_response: safeResponse,
@@ -1142,7 +1217,8 @@
         mizan_status: allowed ? "ALLOW_BOUNDED_OUTPUT" : status,
         protected_surface: [],
         public_preview: true,
-        not_full_eluzacore: true
+        not_full_eluzacore: true,
+        brain_language_frame: brainFrame || undefined
       };
     }
 

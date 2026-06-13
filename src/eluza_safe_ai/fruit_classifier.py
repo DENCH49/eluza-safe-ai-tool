@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable
 
+from .brain_language import read_brain_language_frame
+
 
 USABLE_FRUIT = "USABLE_FRUIT"
 HYPOTHESIS_FRUIT = "HYPOTHESIS_FRUIT"
@@ -23,9 +25,10 @@ class FruitDecision:
     safe_boundary: str
     next_route: str
     evidence_strength: int
+    meaning_frame: dict[str, object] | None = None
 
     def to_dict(self) -> dict[str, object]:
-        return {
+        payload: dict[str, object] = {
             "fruit_type": self.fruit_type,
             "status": self.status,
             "risk": self.risk,
@@ -34,6 +37,9 @@ class FruitDecision:
             "next_route": self.next_route,
             "evidence_strength": self.evidence_strength,
         }
+        if self.meaning_frame is not None:
+            payload["brain_language_frame"] = self.meaning_frame
+        return payload
 
 
 def text_has(text: str, words: Iterable[str]) -> bool:
@@ -79,7 +85,9 @@ def classify_fruit(
     ev = normalize_evidence(evidence)
     combined = f"{prompt}\n{answer}\n{ev}".lower()
     answer_lower = answer.lower()
-    strength = evidence_strength(ev)
+    brain_frame = read_brain_language_frame(prompt, answer, ev)
+    meaning_frame = brain_frame.to_dict()
+    strength = brain_frame.evidence_strength
 
     absolutist = text_has(
         answer_lower,
@@ -101,26 +109,7 @@ def classify_fruit(
         answer_lower,
         ["because", "caused", "cause", "therefore", "ทำให้", "เพราะ", "สรุปว่า", "เป็นสาเหตุ"],
     )
-    high_risk = text_has(
-        combined,
-        [
-            "medicine",
-            "medical",
-            "supplement",
-            "cure",
-            "ยา",
-            "รักษา",
-            "อาหารเสริม",
-            "quran",
-            "religion",
-            "อัลกุรอาน",
-            "ศาสนา",
-            "legal",
-            "law",
-            "financial",
-            "finance",
-        ],
-    )
+    high_risk = brain_frame.high_risk
     asks_next_step = text_has(prompt.lower(), ["what should", "next", "ทำอะไรต่อ", "ควรทำ", "ต่อไป"])
     side_idea = text_has(
         answer_lower,
@@ -154,7 +143,7 @@ def classify_fruit(
             "ยังไม่พิสูจน์",
         ],
     )
-    approved_seed = text_has(combined, ["validated experience", "approved experience", "seed return"])
+    approved_seed = brain_frame.approved_seed
 
     if approved_seed and strength >= 4:
         return FruitDecision(
@@ -165,6 +154,19 @@ def classify_fruit(
             safe_boundary="Use as experience seed within the same scope, not as universal truth.",
             next_route="TAJRIBAH_STORE",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
+        )
+
+    if brain_frame.live_source_needed:
+        return FruitDecision(
+            fruit_type=HYPOTHESIS_FRUIT,
+            status="RESEARCH_MORE",
+            risk="live_source_needed",
+            reason="The answer depends on current or changing information that must be checked against a live source.",
+            safe_boundary="Check the current source before treating this as true.",
+            next_route="RESEARCH_QUEUE",
+            evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if high_risk and (absolutist or (strength < 1 and not careful)):
@@ -176,6 +178,7 @@ def classify_fruit(
             safe_boundary="Do not present it as true. Require qualified evidence, expert review, or more research.",
             next_route="REJECTED_WITH_REASON",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if high_risk and strength < 1:
@@ -187,6 +190,7 @@ def classify_fruit(
             safe_boundary="Keep it as research or review material, not public truth.",
             next_route="RESEARCH_QUEUE",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if weak_only and absolutist:
@@ -198,6 +202,7 @@ def classify_fruit(
             safe_boundary="Reject the claim and keep the reason for future inspection.",
             next_route="REJECTED_WITH_REASON",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if side_idea:
@@ -209,6 +214,7 @@ def classify_fruit(
             safe_boundary="Store as a side idea for later research or planning.",
             next_route="IDEA_BANK",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if weak_only and strength < 1:
@@ -220,6 +226,7 @@ def classify_fruit(
             safe_boundary="Archive as low priority unless new evidence appears.",
             next_route="DORMANT_ARCHIVE",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if asks_next_step and careful:
@@ -231,6 +238,7 @@ def classify_fruit(
             safe_boundary="Use the bounded next step while keeping truth claims under review.",
             next_route="OUTPUT_ACTION",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if strength >= 4 and not absolutist:
@@ -242,6 +250,7 @@ def classify_fruit(
             safe_boundary="Use within the stated evidence boundary.",
             next_route="OUTPUT_ACTION",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if causal and not careful and strength < 3:
@@ -253,6 +262,7 @@ def classify_fruit(
             safe_boundary="Mark the causal claim as a hypothesis and design a test.",
             next_route="RESEARCH_QUEUE",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     if absolutist and strength < 2:
@@ -264,6 +274,7 @@ def classify_fruit(
             safe_boundary="State it as a hypothesis and test competing explanations before claiming truth.",
             next_route="RESEARCH_QUEUE",
             evidence_strength=strength,
+            meaning_frame=meaning_frame,
         )
 
     return FruitDecision(
@@ -274,4 +285,5 @@ def classify_fruit(
         safe_boundary="Use cautious wording and route to research before treating it as true.",
         next_route="RESEARCH_QUEUE",
         evidence_strength=strength,
+        meaning_frame=meaning_frame,
     )

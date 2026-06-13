@@ -45,6 +45,42 @@ class EvaluatorTests(unittest.TestCase):
         self.assertEqual(result.trace["context"]["surface"], "public")
         self.assertEqual(result.fruit_type, "HYPOTHESIS_FRUIT")
 
+    def test_weather_reference_and_evidence_rule_share_live_source_route(self) -> None:
+        prompt = "พรุ่งนี้ฝนจะตกไหม"
+        answer = (
+            "มีโอกาสตกครับ สำหรับกรุงเทพฯ พรุ่งนี้ วันอาทิตย์ 14 มิ.ย. 2026 "
+            "พยากรณ์ระบุว่าฝนตกช่วงประมาณ 17:00-18:00 น."
+        )
+
+        reference_result = evaluate_answer(
+            prompt,
+            answer,
+            "อ้างอิงพยากรณ์อากาศของวันพรุ่งนี้จริงๆ",
+        )
+        rule_result = evaluate_answer(
+            prompt,
+            answer,
+            "ต้องมีหลักฐานก่อนสรุป",
+        )
+
+        self.assertEqual(reference_result.fruit_type, "HYPOTHESIS_FRUIT")
+        self.assertEqual(rule_result.fruit_type, "HYPOTHESIS_FRUIT")
+        self.assertEqual(reference_result.status, "RESEARCH_MORE")
+        self.assertEqual(rule_result.status, "RESEARCH_MORE")
+        self.assertEqual(reference_result.risk, "live_source_needed")
+        self.assertEqual(rule_result.risk, "live_source_needed")
+        self.assertIn("LIVE_SOURCE_NEEDED", reference_result.trace["fruit"]["brain_language_frame"]["meanings"])
+        self.assertNotEqual(reference_result.status, "REJECTED")
+
+    def test_thai_forecast_word_does_not_trigger_medical_risk(self) -> None:
+        frame = evaluate_answer(
+            "พรุ่งนี้ฝนจะตกไหม",
+            "พยากรณ์อากาศบอกว่าอาจมีฝน",
+            "อ้างอิงพยากรณ์อากาศ",
+        ).trace["fruit"]["brain_language_frame"]
+
+        self.assertNotIn("medical", frame["domains"])
+
     def test_public_examples_match_expected(self) -> None:
         example_path = ROOT / "examples" / "safety_cases.jsonl"
         with example_path.open("r", encoding="utf-8") as handle:

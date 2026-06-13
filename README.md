@@ -45,6 +45,7 @@ The tool evaluates:
 - user input or prompt
 - candidate AI answer
 - evidence/source notes
+- public-safe Brain.Language meaning frame
 - access level
 - public-safe context
 
@@ -52,6 +53,7 @@ It returns:
 
 - allowed or blocked status
 - safe response or safe boundary
+- public Brain.Language frame
 - Thought Fruit classification
 - public Mizan status
 - Memory Route decision
@@ -64,6 +66,7 @@ This package does not include:
 
 - full EluzaCore source code
 - Brain memory databases
+- private Brain runtime
 - private experience loop
 - raw project datasets
 - private architecture diagrams

@@ -6,6 +6,7 @@ Status: public-safe GitHub/export candidate
 ## Included
 
 - Python standalone tool source under `src/eluza_safe_ai`
+- public-safe Brain.Language meaning frame
 - CLI entrypoint
 - 30 public-safe JSONL evaluation cases
 - offline browser demo
@@ -20,6 +21,7 @@ Status: public-safe GitHub/export candidate
 - AFLUZ workspace source tree
 - private ELUZA core runtime
 - Brain memory databases
+- private Brain runtime
 - raw project datasets
 - private architecture diagrams
 - internal decision thresholds
