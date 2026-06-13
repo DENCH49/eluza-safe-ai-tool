@@ -17,6 +17,12 @@ https://dench49.github.io/eluza-safe-ai-tool/
 https://dench49.github.io/eluza-safe-ai-tool/
 ```
 
+Testing guide / คู่มือทดสอบ:
+
+```text
+docs/how-to-test.md
+```
+
 ## Position
 
 AFLUZ develops ELUZA as an AI research project. This package is not ELUZA AI
@@ -77,6 +83,14 @@ bounded answer. The result panel explains the outcome in plain language, while
 ให้กด `ทดลองง่าย / Easy Demo` ก่อน แล้วเลือกการ์ดตัวอย่าง เช่น ขอ source code,
 ต้นไม้/น้ำบาดาล, สุขภาพ, อัลกุรอาน หรือคำตอบที่ใช้ได้ ผลลัพธ์จะแสดงแบบ
 Before/After พร้อมคำอธิบายภาษาไทย และยังมี `Developer trace JSON` สำหรับผู้พัฒนา AI.
+
+If you are testing the public demo for feedback, use:
+
+ถ้าทดสอบเพื่อส่ง feedback ให้ใช้คู่มือนี้:
+
+```text
+docs/how-to-test.md
+```
 
 Run without installing:
 
