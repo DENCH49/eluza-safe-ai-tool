@@ -27,12 +27,14 @@
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
+      font-size: 17px;
+      line-height: 1.5;
       background: var(--bg);
       color: var(--ink);
     }
 
     header {
-      padding: 24px 28px 20px;
+      padding: 22px 28px 18px;
       border-bottom: 1px solid var(--line);
       background: #fff;
     }
@@ -51,7 +53,7 @@
     }
 
     .shell {
-      max-width: 1240px;
+      max-width: 1160px;
       margin: 0 auto;
       padding: 22px;
     }
@@ -85,7 +87,7 @@
 
     .workspace {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.85fr);
+      grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
       gap: 16px;
       align-items: start;
     }
@@ -359,11 +361,11 @@
 
     textarea {
       width: 100%;
-      min-height: 90px;
+      min-height: 112px;
       resize: vertical;
       border: 1px solid #c9d2e6;
       border-radius: 6px;
-      padding: 10px 12px;
+      padding: 12px 13px;
       font: inherit;
       color: var(--ink);
       background: #fff;
@@ -552,8 +554,40 @@
       line-height: 1.45;
     }
 
+    .feedback-form {
+      display: grid;
+      gap: 10px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    .feedback-form h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .feedback-form textarea {
+      min-height: 72px;
+    }
+
+    .minimal-only {
+      display: none !important;
+    }
+
     .hidden {
       display: none;
+    }
+
+    .plain-intro,
+    .use-steps,
+    .mode-tabs,
+    .tool-flow,
+    #easyPanel {
+      display: none !important;
+    }
+
+    #advancedPanel.hidden {
+      display: block;
     }
 
     @media (max-width: 1000px) {
@@ -578,10 +612,9 @@
 </head>
 <body>
   <header>
-    <h1>ELUZA Safe AI Tool / เครื่องมือตรวจคำตอบ AI</h1>
+    <h1>แบบทดสอบความถูกต้องของคำตอบ AI</h1>
     <p class="subtitle">
-      เครื่องมือตรวจคำตอบ AI ก่อนส่งออก / A tool for checking AI draft answers before release.
-      ไม่ใช่แชทกับ ELUZA และไม่ใช่ ELUZA AI เอง / This is not ELUZA chat or ELUZA AI itself.
+      AI Answer Correctness Test / เอาคำถามและคำตอบจาก AI ตัวอื่นมาตรวจว่าเชื่อถือได้ไหม.
       แพ็กเกจนี้ไม่รวม core source, private memory, raw data หรือ internal logic.
     </p>
   </header>
@@ -720,46 +753,45 @@
       </section>
 
       <section id="advancedPanel" class="hidden">
-        <h2>ทดสอบขั้นสูงสำหรับผู้พัฒนา / Advanced Test for Developers</h2>
+        <h2>ตรวจคำตอบ AI / Check an AI answer</h2>
         <p class="simple-note">
-          ใช้ช่องนี้หลังจากคุณถาม AI ตัวอื่นแล้ว ให้เอาคำถามเดิม คำตอบของ AI และกฎ/หลักฐาน/อ้างอิง
-          มาใส่ เพื่อตรวจว่าคำตอบนั้นน่าเชื่อถือพอไหม / Use this after asking another AI.
-          Paste the original prompt, the AI answer, and rule/evidence/reference to inspect whether the answer is reliable enough.
+          ถาม AI ตัวไหนก็ได้ก่อน แล้วเอาคำถาม คำตอบ และหลักเกณฑ์ที่อยากให้ยึดมาใส่ 3 ช่องนี้
+          / Ask any AI first, then paste the question, the AI answer, and the rule or reference to check.
         </p>
         <div class="notice">
-          ตัวอย่างที่ถูกต้อง: ช่อง 1 ใส่คำถามที่ถาม AI, ช่อง 2 ใส่คำตอบที่ AI ตอบ,
-          ช่อง 3 ใส่กฎ ข้อบังคับ หลักฐาน หรือแหล่งอ้างอิงที่อยากใช้ตรวจ / Correct use:
-          field 1 = question, field 2 = AI answer, field 3 = rule, policy, evidence, or reference.
+          ไม่ใช่ช่องถาม AI ใหม่ แต่เป็นช่องตรวจคำตอบที่ AI ตอบมาแล้ว
+          / This does not generate a new answer. It checks an answer that an AI already gave.
         </div>
 
         <label for="prompt">
-          1. คำถามเดิมของผู้ใช้
-          <span>Original user input / prompt</span>
+          ช่องที่ 1 คำถามที่ถาม AI มาแล้ว
+          <span>Question you already asked an AI</span>
         </label>
-        <textarea id="prompt"></textarea>
+        <textarea id="prompt" placeholder="เช่น: 3+3 เท่ากับเท่าไร"></textarea>
 
         <label for="candidate">
-          2. คำตอบร่างของ AI ที่จะตรวจ
-          <span>AI candidate answer before final output</span>
+          ช่องที่ 2 คำตอบที่ AI ตอบมา
+          <span>Answer the AI gave you</span>
         </label>
-        <textarea id="candidate"></textarea>
+        <textarea id="candidate" placeholder="เช่น: 6"></textarea>
 
         <label for="evidence">
-          3. กฎ / ข้อบังคับ / หลักฐาน / อ้างอิง / บริบท
-          <span>Rule, policy, evidence, reference, permission, or context</span>
+          ช่องที่ 3 สิ่งที่คุณอยากให้ AI คิดหรือยึดเป็นหลักเกณฑ์
+          <span>Rule, policy, evidence, reference, or principle you want the AI to follow</span>
         </label>
-        <textarea id="evidence"></textarea>
+        <textarea id="evidence" placeholder="เช่น: ตรวจตามคณิตศาสตร์พื้นฐาน / ห้ามเปิดเผย source code / ต้องมีหลักฐานก่อนสรุป"></textarea>
 
         <div class="controls">
-          <button id="run" class="primary" type="button">ตรวจ / Evaluate</button>
-          <button id="loadProtected" class="secondary" type="button">ตัวอย่าง protected / Protected</button>
-          <button id="loadOverclaim" class="secondary" type="button">ตัวอย่างสรุปเกิน / Overclaim</button>
-          <button id="loadUsable" class="secondary" type="button">ตัวอย่างใช้ได้ / Usable</button>
+          <button id="run" class="primary" type="button">ตรวจคำตอบ / Check</button>
+          <button id="loadMath" class="secondary" type="button">ตัวอย่าง 3+3</button>
+          <button id="loadProtected" class="secondary" type="button">ตัวอย่างข้อมูลลับ</button>
+          <button id="loadOverclaim" class="secondary" type="button">ตัวอย่างสรุปเกิน</button>
+          <button id="clearForm" class="secondary" type="button">ล้างช่อง</button>
         </div>
 
         <div class="notice">
-          หน้านี้ตรวจคำตอบร่างของ AI ไม่ได้ตัดสินแทนผู้เชี่ยวชาญในกฎหมาย การแพทย์ การเงิน ศาสนา หรือระบบความปลอดภัยจริง
-          / This evaluates AI draft answers only. It does not replace qualified review in legal, medical, financial, religious, or safety-critical domains.
+          เรื่องสำคัญ เช่น กฎหมาย แพทย์ การเงิน ศาสนา หรือความปลอดภัยจริง ยังต้องให้ผู้เชี่ยวชาญตรวจ
+          / Important domains still require qualified review.
         </div>
       </section>
 
@@ -802,6 +834,32 @@
             <pre id="json"></pre>
           </details>
         </div>
+        <div class="feedback-form">
+          <h3>ส่ง feedback / Send feedback</h3>
+          <label for="feedbackUnderstand">
+            เข้าใจไหมว่าเครื่องมือนี้ทำอะไร?
+            <span>Did you understand what this tool does?</span>
+          </label>
+          <textarea id="feedbackUnderstand" placeholder="ตอบสั้น ๆ ได้เลย"></textarea>
+
+          <label for="feedbackConfusing">
+            จุดไหนงงที่สุด?
+            <span>What was confusing?</span>
+          </label>
+          <textarea id="feedbackConfusing" placeholder="เช่น ไม่เข้าใจช่องที่ 3 / ไม่เข้าใจผลลัพธ์"></textarea>
+
+          <label for="feedbackSuggestion">
+            อยากให้เพิ่มหรือแก้อะไร?
+            <span>What should be improved?</span>
+          </label>
+          <textarea id="feedbackSuggestion" placeholder="ข้อเสนอแนะ"></textarea>
+
+          <div class="controls">
+            <button id="sendFeedback" class="primary" type="button">คัดลอก feedback</button>
+            <button id="openIssue" class="secondary" type="button">ส่งผ่าน GitHub</button>
+          </div>
+          <span id="feedbackStatus" class="simple-note"></span>
+        </div>
       </aside>
     </div>
   </main>
@@ -817,6 +875,15 @@
     ];
 
     const samples = [
+      {
+        id: "math",
+        title: "คณิตศาสตร์ง่าย / Simple math",
+        description: "คำตอบตรงตามคณิตศาสตร์พื้นฐาน สามารถผ่านได้ / Basic arithmetic can pass when correct.",
+        expected: "ควรผ่าน / Usable",
+        prompt: "3+3 เท่ากับเท่าไร",
+        candidate: "6",
+        evidence: "ตรวจตามคณิตศาสตร์พื้นฐาน"
+      },
       {
         id: "protected",
         title: "ขอ source code / Source code request",
@@ -876,6 +943,101 @@
     const $ = (id) => document.getElementById(id);
     const has = (text, words) => words.some((word) => text.toLowerCase().includes(word.toLowerCase()));
 
+    const basicFactChecks = [
+      {
+        question: [/เมืองหลวง.*ไทย/, /capital.*thailand/i],
+        accepted: ["กรุงเทพ", "กรุงเทพมหานคร", "bangkok"],
+        expected: "กรุงเทพมหานคร / Bangkok"
+      },
+      {
+        question: [/ท้องฟ้า.*สีอะไร/, /sky.*color/i],
+        accepted: ["ฟ้า", "สีฟ้า", "น้ำเงิน", "blue"],
+        expected: "โดยทั่วไปเป็นสีฟ้า / Usually blue"
+      },
+      {
+        question: [/น้ำ.*เดือด.*กี่/, /boil.*water/i, /water.*boil/i],
+        accepted: ["100", "หนึ่งร้อย", "212", "ระดับน้ำทะเล", "sea level"],
+        expected: "ประมาณ 100°C ที่ระดับน้ำทะเล / About 100°C at sea level"
+      },
+      {
+        question: [/สัปดาห์.*กี่วัน/, /week.*days/i, /days.*week/i],
+        accepted: ["7", "เจ็ด", "seven"],
+        expected: "7 วัน / 7 days"
+      },
+      {
+        question: [/ปี.*กี่เดือน/, /months.*year/i, /year.*months/i],
+        accepted: ["12", "สิบสอง", "twelve"],
+        expected: "12 เดือน / 12 months"
+      },
+      {
+        question: [/อังกฤษ.*กี่ตัว/, /english alphabet.*how many/i, /letters.*alphabet/i],
+        accepted: ["26", "ยี่สิบหก", "twenty-six", "twenty six"],
+        expected: "26 ตัว / 26 letters"
+      },
+      {
+        question: [/มนุษย์.*ตา.*กี่/, /คน.*ตา.*กี่/, /human.*eyes/i],
+        accepted: ["2", "สอง", "two"],
+        expected: "โดยทั่วไป 2 ข้าง / Usually two"
+      },
+      {
+        question: [/ดวงอาทิตย์.*ขึ้น.*ทิศ/, /พระอาทิตย์.*ขึ้น.*ทิศ/, /sun.*rise/i],
+        accepted: ["ตะวันออก", "east", "eastern"],
+        expected: "ทิศตะวันออก / East"
+      },
+      {
+        question: [/ไฟ.*ร้อน/, /fire.*hot/i],
+        accepted: ["ใช่", "ร้อน", "yes", "hot"],
+        expected: "โดยทั่วไปไฟร้อน / Fire is generally hot"
+      },
+      {
+        question: [/น้ำแข็ง.*เย็น/, /ice.*cold/i],
+        accepted: ["ใช่", "เย็น", "yes", "cold"],
+        expected: "โดยทั่วไปน้ำแข็งเย็น / Ice is generally cold"
+      }
+    ];
+
+    function simpleMathResult(prompt, candidate) {
+      const normalizedPrompt = prompt
+        .replace(/\s+/g, "")
+        .replace(/บวก/g, "+")
+        .replace(/ลบ/g, "-")
+        .replace(/คูณ/g, "*")
+        .replace(/หาร/g, "/")
+        .replace(/เท่ากับ/g, "=")
+        .replace(/เท่าไหร่|เท่าไร|อะไร|ครับ|ค่ะ|คะ|จงหาค่า/g, "");
+      const answerText = candidate.trim();
+      const match = normalizedPrompt.match(/(-?\d+(?:\.\d+)?)([+\-*/x×÷])(-?\d+(?:\.\d+)?)/i);
+      if (!match) return null;
+      const left = Number(match[1]);
+      const op = match[2];
+      const right = Number(match[3]);
+      let expected;
+      if (op === "+") expected = left + right;
+      else if (op === "-") expected = left - right;
+      else if (op === "*" || op.toLowerCase() === "x" || op === "×") expected = left * right;
+      else if (op === "/" || op === "÷") expected = right === 0 ? null : left / right;
+      if (expected === null || !Number.isFinite(expected)) return null;
+      const answerMatch = answerText.match(/-?\d+(?:\.\d+)?/);
+      if (!answerMatch) return null;
+      const numericAnswer = Number(answerMatch[0]);
+      if (!Number.isFinite(numericAnswer)) return null;
+      if (Math.abs(numericAnswer - expected) < 0.000001) {
+        return result(true, "USABLE_FRUIT", "USABLE", "basic_arithmetic_checked", "OUTPUT_ACTION", candidate);
+      }
+      return result(false, "REJECTED_FRUIT", "REJECTED", "basic_arithmetic_mismatch", "REJECTED_WITH_REASON", `คำตอบควรเป็น ${expected} / The answer should be ${expected}.`);
+    }
+
+    function basicFactResult(prompt, candidate) {
+      const question = prompt.toLowerCase();
+      const answer = candidate.toLowerCase();
+      const check = basicFactChecks.find((item) => item.question.some((pattern) => pattern.test(question)));
+      if (!check) return null;
+      if (check.accepted.some((value) => answer.includes(value.toLowerCase()))) {
+        return result(true, "USABLE_FRUIT", "USABLE", "basic_fact_checked", "OUTPUT_ACTION", candidate);
+      }
+      return result(false, "REJECTED_FRUIT", "REJECTED", "basic_fact_mismatch", "REJECTED_WITH_REASON", `คำตอบพื้นฐานควรเป็น: ${check.expected}`);
+    }
+
     function evidenceStrength(evidence) {
       const text = evidence.toLowerCase();
       let score = 0;
@@ -907,6 +1069,12 @@
           not_full_eluzacore: true
         };
       }
+
+      const math = simpleMathResult(prompt, candidate);
+      if (math) return math;
+
+      const basicFact = basicFactResult(prompt, candidate);
+      if (basicFact) return basicFact;
 
       const strength = evidenceStrength(evidence);
       const answer = candidate.toLowerCase();
@@ -1055,6 +1223,56 @@
       render(evaluate(sample.prompt, sample.candidate, sample.evidence), sample);
     }
 
+    function clearForm() {
+      $("prompt").value = "";
+      $("candidate").value = "";
+      $("evidence").value = "";
+      $("feedbackUnderstand").value = "";
+      $("feedbackConfusing").value = "";
+      $("feedbackSuggestion").value = "";
+      document.querySelectorAll(".scenario").forEach((button) => button.classList.remove("active"));
+    }
+
+    function feedbackBody() {
+      const payload = {
+        question: $("prompt").value,
+        ai_answer: $("candidate").value,
+        rule_or_reference: $("evidence").value,
+        result: $("pill").textContent,
+        safer_output: $("afterText").textContent,
+        understood: $("feedbackUnderstand").value,
+        confusing: $("feedbackConfusing").value,
+        suggestion: $("feedbackSuggestion").value
+      };
+      return `## Demo feedback\n\n` +
+        `### Question asked to AI\n${payload.question || "-"}\n\n` +
+        `### AI answer\n${payload.ai_answer || "-"}\n\n` +
+        `### Rule / reference\n${payload.rule_or_reference || "-"}\n\n` +
+        `### Tool result\n${payload.result || "-"}\n\n` +
+        `### Safer output\n${payload.safer_output || "-"}\n\n` +
+        `### เข้าใจไหมว่าเครื่องมือนี้ทำอะไร?\n${payload.understood || "-"}\n\n` +
+        `### จุดไหนงงที่สุด?\n${payload.confusing || "-"}\n\n` +
+        `### อยากให้เพิ่มหรือแก้อะไร?\n${payload.suggestion || "-"}\n`;
+    }
+
+    async function sendFeedback() {
+      const body = feedbackBody();
+      try {
+        await navigator.clipboard.writeText(body);
+        $("feedbackStatus").textContent = "คัดลอกแล้ว ส่งข้อความนี้ให้ผู้พัฒนาได้เลย / Copied.";
+      } catch (error) {
+        $("feedbackStatus").textContent = "คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความ feedback แล้วคัดลอกเอง / Copy failed.";
+      }
+    }
+
+    function openIssue() {
+      const body = feedbackBody();
+      const url = new URL("https://github.com/DENCH49/eluza-safe-ai-tool/issues/new");
+      url.searchParams.set("title", "Demo feedback");
+      url.searchParams.set("body", body);
+      window.open(url.toString(), "_blank", "noopener,noreferrer");
+    }
+
     function renderScenarios() {
       const grid = $("scenarioGrid");
       grid.innerHTML = "";
@@ -1087,12 +1305,15 @@
       };
       render(evaluate(source.prompt, source.candidate, source.evidence), source);
     });
+    $("loadMath").addEventListener("click", () => loadSample("math"));
     $("loadProtected").addEventListener("click", () => loadSample("protected"));
     $("loadOverclaim").addEventListener("click", () => loadSample("tree"));
-    $("loadUsable").addEventListener("click", () => loadSample("usable"));
+    $("clearForm").addEventListener("click", clearForm);
+    $("sendFeedback").addEventListener("click", sendFeedback);
+    $("openIssue").addEventListener("click", openIssue);
 
     renderScenarios();
-    loadSample("protected");
+    loadSample("math");
   </script>
 </body>
 </html>

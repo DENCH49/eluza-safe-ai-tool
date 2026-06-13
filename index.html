@@ -139,59 +139,23 @@
 <body>
   <main>
     <section class="panel">
-      <h1>ELUZA Safe AI Tool</h1>
+      <h1>แบบทดสอบความถูกต้องของคำตอบ AI</h1>
       <p>
-        เครื่องมือตรวจคำตอบร่างของ AI ก่อนปล่อยออกสู่ผู้ใช้ / A public-safe
-        tool for evaluating AI draft answers before release.
+        ถาม AI ตัวไหนก็ได้ก่อน แล้วเอาคำถาม คำตอบ และหลักเกณฑ์ที่อยากให้ยึดมาตรวจ
+        / Ask any AI first, then check its answer with your rule, evidence, or reference.
       </p>
       <p>
-        This package is not ELUZA AI itself. It does not include private ELUZA
-        core source, memory, raw data, private architecture, or internal logic.
+        AI Answer Correctness Test. This is not full ELUZA AI and does not include
+        private core source, memory, raw data, or internal logic.
       </p>
-
-      <div class="plain-box">
-        <strong>สรุปง่าย ๆ / Plain explanation</strong>
-        <p>
-          นี่คือเครื่องมือตรวจคำตอบจาก AI ตัวอื่น: ถาม AI ก่อน แล้วเอาคำถาม
-          คำตอบ และกฎ/หลักฐาน/อ้างอิง มาใส่ในเดโม เพื่อดูว่าคำตอบนั้นควรเชื่อถือ
-          ปล่อย หยุด หรือส่งไปตรวจเพิ่ม
-        </p>
-        <p>
-          This tool checks an answer from another AI. Ask an AI first, then paste
-          the question, the AI answer, and your rule/evidence/reference into the
-          demo to see whether the answer should be trusted, released, stopped, or
-          reviewed further.
-        </p>
-      </div>
-
-      <div class="steps" aria-label="How to use">
-        <div class="step">
-          <b>1. เปิด AI ตัวหนึ่ง</b>
-          <span>ถาม ChatGPT, Gemini, Claude หรือ AI อื่น / Ask any AI.</span>
-        </div>
-        <div class="step">
-          <b>2. คัดลอกคำถาม</b>
-          <span>เอาคำถามเดิมใส่ช่องที่ 1 / Paste the original question.</span>
-        </div>
-        <div class="step">
-          <b>3. คัดลอกคำตอบ AI</b>
-          <span>เอาคำตอบของ AI ใส่ช่องที่ 2 / Paste the AI draft answer.</span>
-        </div>
-        <div class="step">
-          <b>4. ใส่กฎหรือหลักฐาน</b>
-          <span>ใส่กฎ ข้อบังคับ อ้างอิง หรือสิ่งที่อยากให้ตรวจ / Add rule, policy, evidence, or reference.</span>
-        </div>
-      </div>
 
       <div class="actions">
-        <a class="button" href="./demo/offline_demo.html">Open Demo / เปิดเดโม</a>
+        <a class="button" href="./demo/offline_demo.html">เริ่มทดสอบ / Start Test</a>
         <a class="button secondary" href="https://github.com/DENCH49/eluza-safe-ai-tool">View GitHub Repository</a>
       </div>
 
       <p class="note">
-        สำหรับคนทั่วไป: กด Open Demo แล้วลองตามขั้น 1-2-3-4 ด้านบน หรือเลือกการ์ดตัวอย่างก่อน<br>
-        For developers: use the demo first, then inspect the README, CLI, Python
-        API, examples, and redacted JSON trace.
+        หน้าเดโมมี 3 ช่อง: คำถามที่ถาม AI, คำตอบที่ AI ตอบ, และหลักเกณฑ์ที่อยากให้ยึด
       </p>
     </section>
   </main>
