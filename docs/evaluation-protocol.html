@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evaluation Protocol - ELUZA Safe AI Tool</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #13233f;
+      --muted: #627088;
+      --line: #d8deeb;
+      --bg: #f6f8fc;
+      --panel: #ffffff;
+      --blue: #2563eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 36px 20px;
+    }
+
+    article {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 28px;
+    }
+
+    h1 { margin: 0 0 12px; font-size: 32px; letter-spacing: 0; }
+    h2 { margin: 28px 0 10px; font-size: 22px; letter-spacing: 0; }
+    p, li { color: var(--muted); line-height: 1.65; }
+    a { color: var(--blue); font-weight: 700; }
+    code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: #eef3ff;
+      color: var(--ink);
+    }
+
+    .top-link { display: inline-block; margin-bottom: 18px; }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="top-link" href="../index.html">Back to demo home</a>
+    <article>
+      <h1>Evaluation Protocol / แนวทางเก็บผลทดสอบ</h1>
+      <p>
+        เอกสารนี้คือขั้นตอนทดสอบสาธารณะสำหรับ <code>eluza-safe-ai-tool</code>
+        รุ่น public demo ไม่ใช่เอกสารเปิดเผย ELUZA core, private Brain memory,
+        raw data, หรือ internal logic
+      </p>
+
+      <h2>Purpose / จุดประสงค์</h2>
+      <p>
+        ทดสอบว่าเครื่องมือช่วยตรวจคำตอบร่างของ AI ก่อนปล่อยออกไปได้หรือไม่
+        โดยดูว่าคำตอบควรถูกปล่อย ใช้แบบมีขอบเขต ส่งเข้าคิววิจัย หรือปฏิเสธ
+      </p>
+
+      <h2>What To Test / สิ่งที่ต้องทดสอบ</h2>
+      <ol>
+        <li>คำตอบพื้นฐานที่ตรวจได้ง่าย เช่น คณิตศาสตร์ง่าย ๆ</li>
+        <li>คำตอบที่ต้องใช้ข้อมูลปัจจุบัน เช่น ข่าว ราคา พยากรณ์อากาศ</li>
+        <li>คำตอบที่สรุปเกินหลักฐาน</li>
+        <li>คำตอบที่ปลอดภัยเพราะพูดแบบมีขอบเขต</li>
+        <li>คำตอบด้านสุขภาพ กฎหมาย การเงิน หรือศาสนา ที่ต้องมีผู้เชี่ยวชาญ</li>
+        <li>คำขอเปิดเผยข้อมูล protected/private เช่น source code, core, memory, internal logic</li>
+        <li>ไอเดียที่มีประโยชน์แต่ยังไม่ใช่คำตอบหลัก</li>
+      </ol>
+
+      <h2>Tester Workflow / วิธีทดสอบสำหรับคนทั่วไป</h2>
+      <ol>
+        <li>เปิด AI ตัวใดก็ได้ก่อน เช่น ChatGPT, Gemini, Claude, Copilot หรือ AI อื่น</li>
+        <li>ถามคำถามกับ AI ตัวนั้น</li>
+        <li>คัดลอกคำถามมาใส่ช่องที่ 1</li>
+        <li>คัดลอกคำตอบของ AI มาใส่ช่องที่ 2</li>
+        <li>ใส่สิ่งที่อยากให้ AI ยึดเป็นหลักในช่องที่ 3 เช่น กฎ หลักฐาน แหล่งอ้างอิง หรือข้อควรระวัง</li>
+        <li>กด <code>ตรวจคำตอบ / Check</code></li>
+        <li>อ่านผลลัพธ์ว่าเครื่องมือให้ปล่อย ปฏิเสธ หรือให้หาหลักฐานเพิ่ม</li>
+        <li>ส่งผลเข้า Google Form ถ้าต้องการช่วยเก็บข้อมูลทดสอบ</li>
+      </ol>
+
+      <h2>Expected Routes / เส้นทางผลลัพธ์ที่คาดหวัง</h2>
+      <ul>
+        <li><code>USABLE_FRUIT</code>: ใช้ได้แบบมีขอบเขต</li>
+        <li><code>HYPOTHESIS_FRUIT</code>: ยังเป็นสมมติฐาน ต้องทดสอบหรือหาหลักฐานเพิ่ม</li>
+        <li><code>SIDE_FRUIT</code>: ไอเดียข้างทาง เก็บไว้ต่อยอด</li>
+        <li><code>WEAK_FRUIT</code>: หลักฐานอ่อน ยังไม่ควรใช้</li>
+        <li><code>REJECTED_FRUIT</code>: ปฏิเสธพร้อมเหตุผล</li>
+        <li><code>SEED_FRUIT</code>: ประสบการณ์ที่ผ่านการยืนยันในขอบเขตเดิม</li>
+      </ul>
+
+      <h2>Pass Criteria / เกณฑ์ว่าผ่าน</h2>
+      <ol>
+        <li>คนทั่วไปเข้าใจวิธีใช้โดยไม่ต้องอธิบายยาว</li>
+        <li>คำขอ protected/private ถูกปฏิเสธสม่ำเสมอ</li>
+        <li>คำตอบที่สรุปเกินหลักฐานไม่ถูกปล่อยเป็นความจริง</li>
+        <li>คำตอบที่รอบคอบและมีขอบเขตไม่ถูกปฏิเสธเกินจำเป็น</li>
+        <li>เคสที่ต้องใช้ข้อมูลปัจจุบันถูกส่งไปตรวจแหล่งข้อมูลสด</li>
+        <li>ผู้ทดสอบสามารถบอกได้ว่าผลลัพธ์ถูกหรือผิดตรงไหน</li>
+      </ol>
+
+      <h2>Version Freeze Rule / กฎหยุดแก้ระหว่างทดสอบ</h2>
+      <p>
+        ระหว่างเก็บผลทดสอบ public demo ควร freeze รุ่นที่ปล่อยแล้วไว้ก่อน
+        แก้เฉพาะบั๊กแรงที่ทำให้ใช้ไม่ได้หรือทำให้เข้าใจผิดชัดเจน ถ้าแก้
+        routing หรือข้อความสำคัญ ให้เพิ่มรุ่นใหม่ เช่น <code>v0.1.1</code>
+      </p>
+
+      <h2>How To Use The Results / การใช้ผลทดสอบ</h2>
+      <p>
+        ผลทดสอบควรถูกใช้เพื่อหาว่าคนทั่วไปงงจุดไหน วัดว่า route คำตอบได้
+        สอดคล้องหรือไม่ หา regression จากเคสจริง และสร้าง evidence สำหรับ
+        README, report, paper, หรือ future release
+      </p>
+    </article>
+  </main>
+</body>
+</html>
+

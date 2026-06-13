@@ -29,6 +29,18 @@ Testing guide / คู่มือทดสอบ:
 docs/how-to-test.md
 ```
 
+Evaluation protocol:
+
+```text
+docs/evaluation-protocol.md
+```
+
+Known limitations:
+
+```text
+docs/known-limitations.md
+```
+
 ## Position
 
 AFLUZ develops ELUZA as an AI research project. This package is not ELUZA AI
@@ -193,3 +205,7 @@ eluza-safe-ai-tool
 This is not a legal, medical, financial, religious, or safety-critical decision
 system. It is an evaluation tool for AI answer candidates. High-risk domains
 still require qualified review.
+
+For public testing, keep each released demo version stable while collecting
+results. If routing behavior or major wording changes, release a new version so
+old and new test records can be compared clearly.

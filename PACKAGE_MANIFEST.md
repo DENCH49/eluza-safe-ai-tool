@@ -11,6 +11,7 @@ Status: public-safe GitHub/export candidate
 - 30 public-safe JSONL evaluation cases
 - offline browser demo
 - concept and access docs
+- evaluation protocol and known limitations docs
 - evaluation-only license draft
 - generated batch report from the 30-case run
 - UX update: demo now has bilingual Thai/English `Easy Demo` scenario cards

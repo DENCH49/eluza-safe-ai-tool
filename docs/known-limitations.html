@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Known Limitations - ELUZA Safe AI Tool</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #13233f;
+      --muted: #627088;
+      --line: #d8deeb;
+      --bg: #f6f8fc;
+      --panel: #ffffff;
+      --blue: #2563eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 36px 20px;
+    }
+
+    article {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 28px;
+    }
+
+    h1 { margin: 0 0 12px; font-size: 32px; letter-spacing: 0; }
+    h2 { margin: 28px 0 10px; font-size: 22px; letter-spacing: 0; }
+    p, li { color: var(--muted); line-height: 1.65; }
+    a { color: var(--blue); font-weight: 700; }
+    code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: #eef3ff;
+      color: var(--ink);
+    }
+
+    .top-link { display: inline-block; margin-bottom: 18px; }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="top-link" href="../index.html">Back to demo home</a>
+    <article>
+      <h1>Known Limitations / ข้อจำกัดที่ต้องรู้</h1>
+      <p>
+        เอกสารนี้ระบุข้อจำกัดของ <code>eluza-safe-ai-tool</code> รุ่น public
+        demo เพื่อไม่ให้ผู้ทดสอบหรือผู้พัฒนา AI เข้าใจว่า package นี้คือ
+        ELUZA AI เต็มระบบ
+      </p>
+
+      <h2>Not Full ELUZA AI / ไม่ใช่ ELUZA เต็มตัว</h2>
+      <p>
+        Package นี้เป็นเครื่องมือตรวจคำตอบร่างของ AI ก่อนปล่อยออกไป ไม่ใช่
+        ตัวตน ELUZA เต็มระบบ และไม่รวม private ELUZA core, private Brain
+        runtime, memory, experience loop, raw data, หรือ internal architecture
+      </p>
+
+      <h2>Public-Safe Brain.Language Only</h2>
+      <p>
+        Brain.Language ที่อยู่ใน package นี้เป็น meaning frame แบบ public-safe
+        สำหรับอ่านข้อความที่ผู้ใช้เห็นเท่านั้น ไม่ใช่สมองเต็มของ ELUZA และ
+        ไม่สามารถแทน private Brain memory, Brain registry, owner experience,
+        หรือระบบเรียนรู้ภายในได้
+      </p>
+
+      <h2>No Live Web / ไม่มีข้อมูลสด</h2>
+      <p>
+        Demo นี้ทำงานแบบ offline/static จึงไม่ดึงข่าว ราคา พยากรณ์อากาศ หรือ
+        ข้อมูลล่าสุดจากอินเทอร์เน็ตเอง ถ้าคำตอบขึ้นกับข้อมูลปัจจุบัน ผู้ใช้
+        หรือระบบภายนอกต้องไปตรวจแหล่งข้อมูลจริงอีกที
+      </p>
+
+      <h2>Not Expert Review / ไม่แทนผู้เชี่ยวชาญ</h2>
+      <p>
+        เครื่องมือนี้ไม่ใช่แพทย์ นักกฎหมาย นักการเงิน ผู้เชี่ยวชาญศาสนา หรือ
+        ระบบตัดสินความปลอดภัยจริง คำตอบด้านสุขภาพ กฎหมาย การเงิน ศาสนา หรือ
+        ความปลอดภัยสูง ต้องมีผู้เชี่ยวชาญตรวจสอบก่อนนำไปใช้จริง
+      </p>
+
+      <h2>Rule Field Sensitivity / ช่องหลักเกณฑ์ยังไวต่อถ้อยคำ</h2>
+      <p>
+        ช่องที่ 3 ใช้เพื่อบอกหลักเกณฑ์ หลักฐาน กฎ หรือแหล่งอ้างอิงที่อยากให้
+        AI ยึด ถ้อยคำที่ต่างกันอาจทำให้ route ต่างกันได้ โดยเฉพาะใน demo ที่
+        ยังไม่มี private Brain memory และยังไม่มี live source
+      </p>
+
+      <h2>No Private Access / ไม่เปิดข้อมูล protected</h2>
+      <p>
+        คำขอที่ต้องการ source code, core, private memory, raw data, internal
+        logic, private architecture หรือ owner private logs ต้องถูกปฏิเสธใน
+        public demo ข้อความปฏิเสธที่คาดหวังคือ
+        <code>ไม่สามารถเปิดเผยได้ค่ะ</code>
+      </p>
+
+      <h2>Demo Is Evidence, Not Final Proof</h2>
+      <p>
+        ผลทดสอบจาก demo เป็นหลักฐานเพื่อพัฒนาและประเมิน tool layer ยังไม่ใช่
+        หลักฐานว่า ELUZA full system แก้ปัญหา AI ทั้งหมดได้สมบูรณ์แล้ว
+      </p>
+
+      <h2>Current Best Use</h2>
+      <ol>
+        <li>ช่วยคนทั่วไปตรวจคำตอบ AI ก่อนเชื่อหรือแชร์ต่อ</li>
+        <li>ช่วยผู้พัฒนา AI เห็น route ว่าคำตอบควรถูกปล่อย ปฏิเสธ หรือวิจัยเพิ่ม</li>
+        <li>เก็บ feedback เพื่อวัดว่า UI และผลลัพธ์เข้าใจง่ายหรือไม่</li>
+        <li>ใช้เป็น public demo สำหรับ GitHub, report, และงานวิจัยระยะต้น</li>
+      </ol>
+    </article>
+  </main>
+</body>
+</html>
+
