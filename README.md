@@ -11,6 +11,12 @@ Try the bilingual public demo:
 https://dench49.github.io/eluza-safe-ai-tool/
 ```
 
+Public test results / ผลทดสอบสาธารณะ:
+
+```text
+https://dench49.github.io/eluza-safe-ai-tool/results.html
+```
+
 ลองเดโมสองภาษาได้ที่ลิงก์นี้ หลังจากเปิด GitHub Pages:
 
 ```text

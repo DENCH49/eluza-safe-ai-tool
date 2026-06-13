@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ELUZA Safe AI Tool - Public Test Results</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #13233f;
+      --muted: #627088;
+      --line: #d8deeb;
+      --bg: #f6f8fc;
+      --panel: #ffffff;
+      --soft: #eef3fb;
+      --blue: #2563eb;
+      --green: #187345;
+      --red: #b42338;
+      --gold: #946300;
+      --purple: #5b46a3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    header,
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    header {
+      padding-top: 34px;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    a {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      text-decoration: none;
+      background: #fff;
+    }
+
+    .button.primary {
+      border-color: var(--blue);
+      color: #fff;
+      background: var(--blue);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .lead {
+      max-width: 860px;
+      font-size: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      background: var(--panel);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .metric b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .sections {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .status {
+      display: inline-flex;
+      width: fit-content;
+      margin-bottom: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid #e4c16f;
+      color: var(--gold);
+      background: #fff9e9;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .ok { color: var(--green); font-weight: 700; }
+    .blocked { color: var(--red); font-weight: 700; }
+    .research { color: var(--purple); font-weight: 700; }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfcff;
+    }
+
+    .step b {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .note {
+      border: 1px solid #c7d7f4;
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--soft);
+      color: var(--ink);
+    }
+
+    @media (max-width: 840px) {
+      .grid,
+      .sections {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav aria-label="Page navigation">
+      <a class="button" href="./">Home</a>
+      <a class="button primary" href="./demo/offline_demo.html">Start Test / เริ่มทดสอบ</a>
+      <a class="button" href="https://github.com/DENCH49/eluza-safe-ai-tool">GitHub</a>
+    </nav>
+    <h1>Public Test Results / ผลทดสอบสาธารณะ</h1>
+    <p class="lead">
+      This page summarizes public-safe evidence for ELUZA Safe AI Tool. It publishes aggregate results only.
+      Raw Google Form responses, tester accounts, and private notes are not published here.
+    </p>
+    <p class="lead">
+      หน้านี้สรุปหลักฐานแบบสาธารณะของ ELUZA Safe AI Tool โดยเผยแพร่เฉพาะผลรวม ไม่เผยแพร่คำตอบดิบ บัญชีผู้ทดสอบ หรือข้อมูลส่วนตัว
+    </p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <span class="status">Public tester feedback: collecting / กำลังเก็บผลจากผู้ทดสอบจริง</span>
+      <h2>Current Evidence Snapshot</h2>
+      <p>
+        Last updated: 2026-06-13. Automated public-safe validation has passed. Human feedback collection is now open through the demo's Google Form.
+      </p>
+      <div class="grid" aria-label="Current test metrics">
+        <div class="metric">
+          <b>30</b>
+          <span>Public-safe automated cases / เคสทดสอบอัตโนมัติ</span>
+        </div>
+        <div class="metric">
+          <b>30</b>
+          <span>Passed expected route / ผ่านผลที่คาดไว้</span>
+        </div>
+        <div class="metric">
+          <b>0</b>
+          <span>Automated failures / เคสที่ล้มเหลว</span>
+        </div>
+        <div class="metric">
+          <b>Open</b>
+          <span>Human feedback form / เปิดรับผลจากคนทดสอบ</span>
+        </div>
+      </div>
+      <p class="note">
+        Public tester numbers will be added after enough non-sensitive responses are collected and reviewed. Each published update should be traceable to the Google Form response sheet, but only as anonymized aggregate evidence.
+      </p>
+    </section>
+
+    <div class="sections">
+      <section class="panel">
+        <h2>Automated Route Distribution</h2>
+        <p>Distribution from the current 30-case public-safe validation report.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Thought Fruit</th>
+              <th>Cases</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="ok">USABLE_FRUIT</td>
+              <td>4</td>
+              <td>Bounded answer can be used now.</td>
+            </tr>
+            <tr>
+              <td class="research">HYPOTHESIS_FRUIT</td>
+              <td>8</td>
+              <td>Needs proof, test, or more evidence.</td>
+            </tr>
+            <tr>
+              <td class="research">SIDE_FRUIT</td>
+              <td>2</td>
+              <td>Useful idea, not the current answer.</td>
+            </tr>
+            <tr>
+              <td>WEAK_FRUIT</td>
+              <td>2</td>
+              <td>Too weak for output; archive only.</td>
+            </tr>
+            <tr>
+              <td class="blocked">REJECTED_FRUIT</td>
+              <td>13</td>
+              <td>Blocked with reason or protected boundary.</td>
+            </tr>
+            <tr>
+              <td>SEED_FRUIT</td>
+              <td>1</td>
+              <td>Validated scoped experience can return as seed.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>What Will Be Published</h2>
+        <p>Only aggregate, anonymized results should be published from human testing.</p>
+        <div class="timeline">
+          <div class="step">
+            <b>1. Case count / จำนวนเคส</b>
+            <span>Total submitted cases, not tester identity.</span>
+          </div>
+          <div class="step">
+            <b>2. Human agreement / คนเห็นด้วยไหม</b>
+            <span>How many testers marked the tool result as correct or useful.</span>
+          </div>
+          <div class="step">
+            <b>3. Confusion points / จุดที่งง</b>
+            <span>Common UI or explanation problems, summarized without names.</span>
+          </div>
+          <div class="step">
+            <b>4. Improvement queue / สิ่งที่ต้องแก้</b>
+            <span>Repeated feedback items that should become future tasks.</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="sections">
+      <section class="panel">
+        <h2>Current Validation Boundary</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th>Allowed output</th>
+              <td>5 cases were allowed as bounded output or scoped experience.</td>
+            </tr>
+            <tr>
+              <th>Blocked or routed</th>
+              <td>25 cases were refused, routed to research, archived, or held as hypothesis.</td>
+            </tr>
+            <tr>
+              <th>Protected surfaces</th>
+              <td>Source code, raw data, private memory, internal logic, API keys, and core purchase requests are refused.</td>
+            </tr>
+            <tr>
+              <th>High-risk topics</th>
+              <td>Medical, legal, financial, and religious claims are routed cautiously unless qualified evidence exists.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>Next Public Update</h2>
+        <p>
+          The next update should happen after 20-50 submitted human test cases, or earlier if a serious regression appears.
+        </p>
+        <p>
+          อัปเดตถัดไปควรทำหลังมีผลทดสอบจากคนจริงประมาณ 20-50 เคส หรือเร็วกว่านั้นถ้าเจอ regression สำคัญ
+        </p>
+        <div class="timeline">
+          <div class="step">
+            <b>Collect / เก็บข้อมูล</b>
+            <span>Ask testers to use the demo and submit each case through Google Form.</span>
+          </div>
+          <div class="step">
+            <b>Review / ตรวจทาน</b>
+            <span>Remove private data and group repeated feedback themes.</span>
+          </div>
+          <div class="step">
+            <b>Publish / เผยแพร่</b>
+            <span>Update this page with aggregate counts and anonymized findings.</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
