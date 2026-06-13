@@ -3,6 +3,20 @@
 Status: public-safe standalone tool package
 Owner: AFLUZ / ELUZA project
 
+## Live Demo
+
+Try the bilingual public demo:
+
+```text
+https://dench49.github.io/eluza-safe-ai-tool/
+```
+
+ลองเดโมสองภาษาได้ที่ลิงก์นี้ หลังจากเปิด GitHub Pages:
+
+```text
+https://dench49.github.io/eluza-safe-ai-tool/
+```
+
 ## Position
 
 AFLUZ develops ELUZA as an AI research project. This package is not ELUZA AI

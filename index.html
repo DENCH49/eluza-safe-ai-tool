@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ELUZA Safe AI Tool</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #13233f;
+      --muted: #627088;
+      --line: #d8deeb;
+      --bg: #f6f8fc;
+      --panel: #ffffff;
+      --blue: #2563eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 42px 20px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 28px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      letter-spacing: 0;
+    }
+
+    p {
+      max-width: 800px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+
+    a {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .secondary {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .note {
+      border-top: 1px solid var(--line);
+      margin-top: 22px;
+      padding-top: 18px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel">
+      <h1>ELUZA Safe AI Tool</h1>
+      <p>
+        เครื่องมือตรวจคำตอบร่างของ AI ก่อนปล่อยออกสู่ผู้ใช้ / A public-safe
+        tool for evaluating AI draft answers before release.
+      </p>
+      <p>
+        This package is not ELUZA AI itself. It does not include private ELUZA
+        core source, memory, raw data, private architecture, or internal logic.
+      </p>
+
+      <div class="actions">
+        <a class="button" href="./demo/offline_demo.html">Open Demo / เปิดเดโม</a>
+        <a class="button secondary" href="https://github.com/DENCH49/eluza-safe-ai-tool">View GitHub Repository</a>
+      </div>
+
+      <p class="note">
+        สำหรับคนทั่วไป: กด Open Demo แล้วเลือกการ์ดตัวอย่างได้เลย<br>
+        For developers: use the demo first, then inspect the README, CLI, Python
+        API, examples, and redacted JSON trace.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
