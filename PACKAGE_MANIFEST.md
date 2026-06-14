@@ -12,6 +12,7 @@ Status: public-safe GitHub/export candidate
 - offline browser demo
 - concept and access docs
 - evaluation protocol and known limitations docs
+- test case bank, public testing kit, and evaluation report template
 - changelog, roadmap, and GitHub issue templates
 - evaluation-only license draft
 - generated batch report from the 30-case run

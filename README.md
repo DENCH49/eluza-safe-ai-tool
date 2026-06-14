@@ -41,6 +41,14 @@ Known limitations:
 docs/known-limitations.md
 ```
 
+Public testing helpers:
+
+```text
+docs/test-case-bank.md
+docs/public-testing-kit.md
+docs/evaluation-report-template.md
+```
+
 Project tracking:
 
 ```text

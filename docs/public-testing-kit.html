@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Public Testing Kit - ELUZA Safe AI Tool</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #13233f;
+      --muted: #627088;
+      --line: #d8deeb;
+      --bg: #f6f8fc;
+      --panel: #ffffff;
+      --blue: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: var(--bg); }
+    main { max-width: 960px; margin: 0 auto; padding: 36px 20px; }
+    article { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 28px; }
+    h1 { margin: 0 0 12px; font-size: 32px; letter-spacing: 0; }
+    h2 { margin: 30px 0 10px; font-size: 22px; letter-spacing: 0; }
+    p, li { color: var(--muted); line-height: 1.65; }
+    a { color: var(--blue); font-weight: 700; }
+    pre { white-space: pre-wrap; border: 1px solid var(--line); border-radius: 8px; padding: 12px; background: #fbfcff; color: var(--ink); }
+    .top-link { display: inline-block; margin-bottom: 18px; }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="top-link" href="../index.html">Back to demo home</a>
+    <article>
+      <h1>Public Testing Kit / ชุดโพสต์ชวนทดสอบ</h1>
+      <p>ใช้หน้านี้เพื่อคัดลอกข้อความประกาศ ชวนคนมาทดสอบ และเลือกช่องทางโพสต์ที่เหมาะสม</p>
+
+      <h2>โพสต์สั้นภาษาไทย</h2>
+      <pre>ผมทำ demo เครื่องมือตรวจคำตอบ AI ก่อนเชื่อหรือแชร์ต่อครับ
+
+วิธีลอง:
+1. เปิด AI ตัวไหนก็ได้ แล้วถาม 1 คำถาม
+2. เอาคำถามกับคำตอบ AI มาใส่ใน demo
+3. ใส่หลักเกณฑ์ที่อยากให้ AI ยึด เช่น ต้องมีหลักฐาน / ห้ามเปิดข้อมูลลับ / ต้องอ้างอิงแหล่งข้อมูล
+4. ดูว่าเครื่องมือบอกให้ปล่อย ใช้แบบมีขอบเขต หาหลักฐานเพิ่ม หรือปฏิเสธ
+
+นี่ไม่ใช่ ELUZA AI เต็มตัว แต่เป็น public-safe tool สำหรับช่วยตรวจคำตอบ AI
+ลองแล้วช่วยส่ง feedback ให้หน่อยครับ
+
+Demo:
+https://dench49.github.io/eluza-safe-ai-tool/
+
+ถ้าไม่รู้จะถามอะไร ใช้โจทย์ตัวอย่างนี้ได้:
+https://dench49.github.io/eluza-safe-ai-tool/docs/test-case-bank.html</pre>
+
+      <h2>โพสต์ไทยแบบเป็นกันเอง</h2>
+      <pre>ขอแรงช่วยทดสอบเครื่องมือตรวจคำตอบ AI หน่อยครับ
+
+ปัญหาที่ผมอยากแก้คือ หลายครั้ง AI ตอบดูมั่นใจ แต่เราไม่รู้ว่าควรเชื่อไหม
+ตัว demo นี้ไม่ได้ตอบแทน AI แต่ช่วยตรวจ "คำตอบที่ AI ตอบมาแล้ว" ว่าควรปล่อยไหม
+ควรหาหลักฐานเพิ่มไหม หรือควรปฏิเสธ
+
+ใช้ง่าย ๆ:
+- ช่อง 1 ใส่คำถามที่ถาม AI
+- ช่อง 2 ใส่คำตอบที่ AI ตอบ
+- ช่อง 3 ใส่หลักที่อยากให้ AI ยึด เช่น ต้องมีหลักฐาน / ต้องอ้างอิง / ห้ามเปิดข้อมูลลับ
+
+ถ้าไม่รู้จะถามอะไร กดดูธนาคารโจทย์ได้เลย
+
+Demo:
+https://dench49.github.io/eluza-safe-ai-tool/
+
+ธนาคารโจทย์:
+https://dench49.github.io/eluza-safe-ai-tool/docs/test-case-bank.html
+
+ขอบคุณทุก feedback ครับ ผมจะใช้ผลทดสอบแบบไม่ระบุตัวตนเพื่อพัฒนางานวิจัยต่อ</pre>
+
+      <h2>Short English Post</h2>
+      <pre>I am testing a public-safe tool for checking AI draft answers before release.
+
+It does not generate a new answer. It checks an answer that an AI already gave,
+then routes it as usable, bounded, needs evidence, research, or rejected.
+
+Demo:
+https://dench49.github.io/eluza-safe-ai-tool/
+
+Test case bank:
+https://dench49.github.io/eluza-safe-ai-tool/docs/test-case-bank.html
+
+This is not full ELUZA AI and does not include private core source, memory, raw data, or internal logic.
+Feedback is welcome.</pre>
+
+      <h2>ควรโพสต์ที่ไหนดี</h2>
+      <ol>
+        <li>Facebook ส่วนตัว: ดีที่สุดสำหรับคนทั่วไป จะเห็นทันทีว่าคนธรรมดาเข้าใจไหม</li>
+        <li>กลุ่มหรือเพจสาย AI/ChatGPT ภาษาไทย: โพสต์แบบขอ feedback ไม่ใช่ขายของ</li>
+        <li>กลุ่ม Data Science / Python / Developer ไทย: เหมาะกับคนอ่าน trace, README, CLI/API ได้</li>
+        <li>LinkedIn: เหมาะกับผู้พัฒนา นักวิจัย product และคนสนใจ AI safety</li>
+        <li>GitHub Issues: เหมาะกับ feedback ที่ต้องการ input/output ชัดเจน</li>
+        <li>กลุ่มมหาวิทยาลัยหรือชมรมเทคโนโลยี: เหมาะกับนักศึกษาและคนที่ช่วยลองหลายเคสได้</li>
+      </ol>
+
+      <h2>ช่องทางที่น่าลอง</h2>
+      <p>อ่านกฎของแต่ละกลุ่มก่อนโพสต์ และถ้าห้ามโปรโมต ให้ขออนุญาต admin ก่อน</p>
+      <ul>
+        <li><a href="https://www.ai.in.th/">AI Thailand / AI Thailand Community</a></li>
+        <li><a href="https://www.facebook.com/DataScienceTh/">Data Science Thailand</a></li>
+        <li><a href="https://www.meetup.com/global-ai-thailand/">Global AI Bangkok</a></li>
+        <li><a href="https://th.pycon.org/">PyCon Thailand / Python community</a></li>
+        <li>ThaiPy, Bangkok AI, Data Science meetup communities</li>
+        <li>LinkedIn พร้อม tag เช่น AI safety, LLM evaluation, Thai AI</li>
+      </ul>
+
+      <h2>สิ่งที่ไม่ควรทำ</h2>
+      <ul>
+        <li>อย่าโพสต์ว่าเป็น ELUZA AI เต็มตัว</li>
+        <li>อย่าอ้างว่าระบบรับประกันความจริง 100%</li>
+        <li>อย่าโพสต์ถี่จนดูเป็น spam</li>
+        <li>อย่าให้คนใส่ข้อมูลส่วนตัว รหัสผ่าน API key เอกสารลับ หรือข้อมูลสุขภาพจริง</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>

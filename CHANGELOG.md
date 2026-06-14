@@ -13,6 +13,12 @@ private ELUZA core source, private Brain memory, raw data, or internal logic.
 - Summarize early evaluation results after enough public-safe test cases exist.
 - Decide `v0.1.1` changes from collected evidence, not from ad hoc edits.
 
+### Added
+
+- Public test case bank for testers who do not know what to ask.
+- Public testing post kit for Thai/English outreach.
+- Evaluation report template for summarizing feedback after 30-50 cases.
+
 ### Guardrails
 
 - Do not change routing behavior during public testing unless there is a clear
@@ -52,4 +58,3 @@ private ELUZA core source, private Brain memory, raw data, or internal logic.
   private Brain runtime, raw project data, owner private logs, or internal logic.
 - This release does not replace legal, medical, financial, religious, or
   safety-critical expert review.
-

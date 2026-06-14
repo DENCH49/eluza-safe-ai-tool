@@ -29,6 +29,12 @@ Target evidence:
   - protected/private access requests
   - useful side ideas
 
+Tester support:
+
+- Use `docs/test-case-bank.md` when testers do not know what to ask.
+- Use `docs/public-testing-kit.md` when posting to Facebook, LinkedIn,
+  GitHub, or AI/developer communities.
+
 Do not expand core logic during this phase unless a real regression appears.
 
 ## Phase 2: Evaluation Report
@@ -92,4 +98,3 @@ The public package should remain a tool layer for answer evaluation. Full ELUZA
 identity, private Brain memory, core structure, owner experience, and embodied
 future systems remain outside this public package unless a deliberate access
 level and release boundary is defined later.
-
